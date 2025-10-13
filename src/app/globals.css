@@ -1,26 +1,131 @@
+@import url("https://api.fontshare.com/v2/css?f[]=clash+display@400,500,600,700&display=swap");
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Color tokens */
+  --color-primary-background: #316faf;
+  --color-primary-foreground: #ffffff;
+  --color-primary-text: #11273d;
+  --color-secondary-background: #ecf4fa;
+  --color-secondary-light: #f6fbff;
+  --color-secondary-card: #fdfdfd;
+  --color-secondary-white: #ffffff;
+  --color-text-primary: #11273d;
+  --color-text-secondary: #4c4c4c;
+  --color-text-white: #ffffff;
+  --color-border-primary: #11273d;
+  --color-border-light: #d2dfeb;
+  --color-border-white: #ffffff;
+
+  /* Typography tokens */
+  --font-sans: var(--font-inter), var(--font-instrument-sans), sans-serif;
+  --font-display: "Clash Display", "Inter", sans-serif;
+  --text-xs: 8px;
+  --text-sm: 10px;
+  --text-base: 14px;
+  --text-md: 15px;
+  --text-lg: 16px;
+  --text-xl: 18px;
+  --text-2xl: 32px;
+  --text-3xl: 42px;
+  --text-4xl: 75px;
+
+  /* Line-height tokens */
+  --leading-xs: 14px;
+  --leading-sm: 15px;
+  --leading-base: 18px;
+  --leading-md: 19px;
+  --leading-lg: 20px;
+  --leading-xl: 23px;
+  --leading-2xl: 24px;
+  --leading-3xl: 25px;
+  --leading-4xl: 28px;
+  --leading-5xl: 40px;
+  --leading-6xl: 50px;
+  --leading-7xl: 52px;
+  --leading-8xl: 90px;
+
+  /* Spacing tokens */
+  --spacing-xs: 6px;
+  --spacing-sm: 10px;
+  --spacing-md: 12px;
+  --spacing-lg: 14px;
+  --spacing-xl: 16px;
+  --spacing-2xl: 18px;
+  --spacing-3xl: 20px;
+  --spacing-4xl: 22px;
+  --spacing-5xl: 24px;
+  --spacing-6xl: 28px;
+  --spacing-7xl: 32px;
+  --spacing-8xl: 36px;
+  --spacing-9xl: 40px;
+  --spacing-10xl: 42px;
+  --spacing-11xl: 44px;
+  --spacing-12xl: 46px;
+  --spacing-13xl: 52px;
+  --spacing-14xl: 56px;
+  --spacing-15xl: 60px;
+  --spacing-16xl: 80px;
+
+  /* Radius tokens */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 14px;
+  --radius-xl: 22px;
+  --radius-2xl: 26px;
+  --radius-3xl: 28px;
 }
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* CSS custom properties for direct usage */
+    --primary-background: #316faf;
+    --primary-foreground: #ffffff;
+    --primary-text: #11273d;
+    --secondary-background: #ecf4fa;
+    --secondary-light: #f6fbff;
+    --secondary-card: #fdfdfd;
+    --secondary-white: #ffffff;
+    --text-primary: #11273d;
+    --text-secondary: #4c4c4c;
+    --text-white: #ffffff;
+    --border-primary: #11273d;
+    --border-light: #d2dfeb;
+    --border-white: #ffffff;
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: var(--secondary-light);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
