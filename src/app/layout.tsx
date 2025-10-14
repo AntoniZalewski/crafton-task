@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Inter, Instrument_Sans } from "next/font/google";
 import "./globals.css";
 
@@ -14,7 +13,7 @@ const instrumentSans = Instrument_Sans({
   weight: ["400", "500"],
 });
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "Premium Real Estate Investment Opportunities | Crafton Poland",
   description:
     "Discover premium Polish real estate investments with Crafton. Explore Poznań Park development & expert property advisory services.",
@@ -27,7 +26,8 @@ export const metadata: Metadata = {
     locale: "pl_PL",
     type: "website",
   },
-};
+  icons: { icon: "/favicon.ico" },
+} as const;
 
 export default function RootLayout({
   children,

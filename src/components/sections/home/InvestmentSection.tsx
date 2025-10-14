@@ -1,164 +1,174 @@
+/* eslint-disable @next/next/no-img-element */
+
 'use client';
 
-import { useMemo, useState } from 'react';
+import Image from 'next/image';
+import { useState } from 'react';
 import Button from '../../ui/Button';
 
-const slides = [
+type Slide = {
+  city: string;
+  title: string;
+  desc: string;
+  image: string;
+};
+
+const slides: Slide[] = [
   {
-    id: 1,
-    location: 'Poznań 20-300',
+    city: 'Poznań 20-300',
     title: 'Poznań Park',
-    description:
-      'Poznań Park to kameralne osiedle nowoczesnych domów, które harmonijnie łączy komfort życia z bliskością natury. Położone zaledwie 10 minut od centrum Poznania, oferuje ciszę i zieleń bez kompromisów - z łatwym dostępem do miejskich udogodnień.',
-    image:
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=80',
+    desc: 'Kameralne osiedle położone w sąsiedztwie zieleni i miejskich udogodnień. Komfortowe domy jednorodzinne z przestronnymi tarasami.',
+    image: '/house1.png',
   },
   {
-    id: 2,
-    location: 'Warszawa 01-134',
-    title: 'Skyline Residence',
-    description:
-      'Panoramiczne apartamenty zaprojektowane z myślą o komforcie i maksymalnym doświetleniu. Skyline Residence łączy kameralność z nowoczesnymi rozwiązaniami technologicznymi.',
-    image:
-      'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1600&q=80',
+    city: 'Poznań 20-300',
+    title: 'Nowe Ogrody',
+    desc: 'Zespół niskich budynków z prywatnymi ogródkami i strefą rekreacji. Idealne połączenie spokoju z miejską energią.',
+    image: '/house2.png',
   },
   {
-    id: 3,
-    location: 'Gdańsk 80-178',
-    title: 'Marina Vista',
-    description:
-      'Ekskluzywne mieszkania z widokiem na marinę i pełną infrastrukturą usługową. Miejsce, które celebruje nadmorski styl życia oraz nowoczesną architekturę.',
-    image:
-      'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1600&q=80',
+    city: 'Poznań 20-300',
+    title: 'Zielone Tarasy',
+    desc: 'Nowoczesna architektura, panoramiczne przeszklenia i widok na park. Wysoki standard wykończenia w każdym detalu.',
+    image: '/house3.png',
+  },
+  {
+    city: 'Poznań 20-300',
+    title: 'Osiedle Przy Parku',
+    desc: 'Rodzinne osiedle inspirowane naturą. Bezpieczna przestrzeń z placem zabaw, strefą fitness i lokalnymi usługami.',
+    image: '/house4.png',
   },
 ];
 
+const ArrowCircle = ({
+  direction,
+  onClick,
+  ariaLabel,
+}: {
+  direction: 'prev' | 'next';
+  onClick: () => void;
+  ariaLabel: string;
+}) => (
+  <button
+    type="button"
+    onClick={onClick}
+    aria-label={ariaLabel}
+    className="flex h-[53px] w-[53px] items-center justify-center rounded-full border border-[#D9DEE5] bg-white text-[#0A2030]/80 transition-colors duration-150 hover:bg-[#F7FAFC] focus:outline-none focus:ring-2 focus:ring-[#346EAE] focus:ring-offset-2"
+  >
+    <svg
+      width={12}
+      height={14}
+      viewBox="0 0 12 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={direction === 'next' ? '' : 'rotate-180'}
+      aria-hidden="true"
+    >
+      <path
+        d="M1.5 1.75L9.25 7l-7.75 5.25"
+        stroke="currentColor"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  </button>
+);
+
 const InvestmentSection = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [index, setIndex] = useState(0);
+  const current = slides[index];
 
-  const activeSlide = useMemo(
-    () => slides[currentSlide % slides.length],
-    [currentSlide]
-  );
-
-  const goPrevious = () => {
-    setCurrentSlide((prev) =>
-      prev === 0 ? slides.length - 1 : (prev - 1) % slides.length
-    );
+  const goPrev = () => {
+    setIndex((i) => (i + slides.length - 1) % slides.length);
   };
 
   const goNext = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
+    setIndex((i) => (i + 1) % slides.length);
   };
 
   return (
-    <section id="inwestycje" className="w-full bg-secondary-white">
-      <div className="mx-auto w-full max-w-[1280px] px-6 py-24 lg:px-10">
-        <div className="flex flex-col items-center gap-7 text-center">
-          <h2 className="font-[Clash Display] text-[32px] font-medium uppercase tracking-[0.28em] text-text-primary sm:text-[36px] md:text-[40px]">
+    <section className="w-full bg-secondary-white">
+      <div className="mx-auto w-full max-w-[1280px] px-[clamp(24px,6vw,80px)] py-20">
+        <div className="text-center">
+          <h2 className="font-[Clash Display] text-[42px] leading-[1.2] text-[#0A2030]">
             Nasze inwestycje
           </h2>
-          <p className="max-w-[720px] text-lg leading-7 text-text-secondary">
-            Nasze inwestycje to miejsca, które łączą nowoczesny design,
-            funkcjonalność i trwałość. Każdy projekt realizowany przez Crafton
-            to wynik pasji, zaangażowania i dbałości o każdy szczegół.
+          <p className="mx-auto mt-5 max-w-[750px] font-[var(--font-instrument-sans)] text-[16px] leading-[1.5] text-[#0A2030]/80">
+            Wybierz inwestycję Crafton dopasowaną do Twojego stylu życia. Każdy
+            projekt to dokładnie zaprojektowana przestrzeń, w której komfort,
+            design i lokalizacja tworzą spójną całość.
           </p>
         </div>
 
-        <div className="mt-16 grid gap-8 lg:grid-cols-[minmax(0,1fr)_1.3fr] lg:items-stretch">
-          <div className="flex flex-col rounded-3xl border border-border-light bg-secondary-white p-12 shadow-[0_24px_48px_rgba(17,_39,_61,_0.08)]">
-            <div className="flex items-center gap-4">
-              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-secondary-background">
-                <svg
-                  className="h-6 w-6 text-primary-background"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 4.87 5.57 11.34 6.03 11.87.26.28.68.28.94 0C13.43 20.34 19 13.87 19 9c0-3.87-3.13-7-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5Z" />
-                </svg>
+        <div
+          role="region"
+          aria-label="Nasze inwestycje"
+          className="mt-20 grid gap-6 lg:grid-cols-2 lg:gap-[32px]"
+        >
+          <div className="order-2 flex flex-col rounded-[12px] border border-[#E6EDF5] bg-white p-[36px] lg:order-1">
+            <div aria-live="polite" className="flex flex-col gap-[10px]">
+              <div className="flex items-center gap-[10px]">
+                <img
+                  src="/icon-lokalizacja.svg"
+                  alt=""
+                  aria-hidden="true"
+                  className="h-[50px] w-[50px]"
+                />
+                <span className="font-[Clash Display] text-[15px] leading-[15px] text-[#0A2030]">
+                  {current.city}
+                </span>
               </div>
-              <span className="font-[Clash Display] text-md font-medium uppercase tracking-[0.24em] text-text-primary">
-                {activeSlide.location}
-              </span>
+
+              <h3 className="font-[Clash Display] text-[32px] leading-[1.2] text-[#0A2030] md:text-[36px]">
+                {current.title}
+              </h3>
+
+              <p className="max-w-[443px] font-[var(--font-instrument-sans)] text-[16px] leading-[1.5] text-[#0A2030]/80">
+                {current.desc}
+              </p>
+
+              <Button
+                as="link"
+                href="#"
+                variant="primary"
+                className="mt-[36px]"
+              >
+                Poznaj szczegóły
+              </Button>
             </div>
 
-            <h3 className="mt-6 font-[Clash Display] text-2xl font-medium uppercase tracking-[0.28em] text-text-primary">
-              {activeSlide.title}
-            </h3>
-
-            <p className="mt-5 text-base leading-[26px] text-text-secondary">
-              {activeSlide.description}
-            </p>
-
-            <Button
-              variant="primary"
-              size="large"
-              className="mt-11 self-start px-9 py-4"
-            >
-              <span className="mr-3 font-[Clash Display] uppercase tracking-[0.24em]">
-                POZNAJ SZCZEGÓŁY
-              </span>
-              <svg
-                className="h-5 w-5 text-primary-foreground"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                viewBox="0 0 24 24"
-              >
-                <path d="M5 19L19 5" />
-                <path d="M9 5h10v10" />
-              </svg>
-            </Button>
+            <div className="mt-[60px] flex h-[64px] items-center gap-[10px]">
+              <ArrowCircle
+                direction="prev"
+                onClick={goPrev}
+                ariaLabel="Poprzedni slajd"
+              />
+              <ArrowCircle
+                direction="next"
+                onClick={goNext}
+                ariaLabel="Następny slajd"
+              />
+            </div>
           </div>
 
-          <div className="overflow-hidden rounded-3xl border border-border-light">
-            <img
-              src={`${activeSlide.image}&sat=-10`}
-              alt={activeSlide.title}
-              className="h-full w-full object-cover"
-            />
+          <div className="order-1 overflow-hidden rounded-[14px] lg:order-2">
+            <div className="relative h-[320px] w-full rounded-[14px] lg:h-[680px]">
+              {slides.map((slide, slideIndex) => (
+                <Image
+                  key={slide.title}
+                  src={slide.image}
+                  alt={`Wizualizacja: ${slide.title}`}
+                  fill
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  priority={slideIndex === 0}
+                  className={`rounded-[14px] object-cover transition-opacity duration-500 ${
+                    slideIndex === index ? 'opacity-100' : 'opacity-0'
+                  }`}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-
-        <div className="mt-12 flex items-center justify-start gap-4">
-          <button
-            type="button"
-            onClick={goPrevious}
-            className="flex h-14 w-14 items-center justify-center rounded-2xl border border-border-primary bg-secondary-white text-text-primary transition-colors duration-150 hover:bg-secondary-light"
-            aria-label="Poprzednia inwestycja"
-          >
-            <svg
-              className="h-6 w-6"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M15 5l-7 7 7 7" />
-            </svg>
-          </button>
-          <button
-            type="button"
-            onClick={goNext}
-            className="flex h-14 w-14 items-center justify-center rounded-2xl border border-border-primary bg-secondary-white text-text-primary transition-colors duration-150 hover:bg-secondary-light"
-            aria-label="Następna inwestycja"
-          >
-            <svg
-              className="h-6 w-6"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
         </div>
       </div>
     </section>

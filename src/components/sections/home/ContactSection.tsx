@@ -48,10 +48,11 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="kontakt" className="w-full bg-secondary-background py-24">
-      <div className="mx-auto w-full max-w-[1280px] px-6 lg:px-10">
-        <div className="flex flex-col gap-12">
-          <div>
+    <section id="kontakt" className="w-full bg-secondary-background py-[80px]">
+      <span id="poznajmy" className="block h-0" aria-hidden="true" />
+      <div className="mx-auto w-full max-w-[1280px] px-[80px]">
+        <div className="flex flex-col gap-[20px]">
+          <div className="pt-[32px]">
             <h2 className="font-[Clash Display] text-[44px] uppercase tracking-[0.32em] text-text-primary sm:text-[52px]">
               POROZMAWIAJMY
             </h2>
@@ -59,63 +60,67 @@ const ContactSection = () => {
 
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col gap-9 rounded-3xl border border-border-light bg-secondary-white p-10 shadow-[0_24px_48px_rgba(17,_39,_61,_0.08)]"
+            className="flex flex-col gap-[20px] rounded-3xl border border-border-light bg-secondary-white p-[32px] shadow-[0_24px_48px_rgba(17,_39,_61,_0.08)]"
           >
             <div>
               <h3 className="font-[Clash Display] text-[26px] uppercase tracking-[0.28em] text-text-primary">
-                ZOSTAW NAM WIADOMOŚĆ
+                ZOSTAW NAM WIADOMOSC
               </h3>
             </div>
 
-            <div className="grid gap-7 lg:grid-cols-3">
-              <label className="flex flex-col gap-3">
+            <div className="grid gap-[20px] lg:grid-cols-3">
+              <label className="flex flex-col gap-[10px]">
                 <span className="font-[Clash Display] text-sm font-semibold uppercase tracking-[0.24em] text-text-secondary">
                   ADRES E-MAIL
                 </span>
                 <EditText
                   type="email"
-                  placeholder="Twój adres e-mail"
+                  placeholder="Twoj adres e-mail"
                   value={formData.email}
                   onChange={handleChange('email')}
+                  className="h-[56px]"
                 />
               </label>
 
-              <label className="flex flex-col gap-3">
+              <label className="flex flex-col gap-[10px]">
                 <span className="font-[Clash Display] text-sm font-semibold uppercase tracking-[0.24em] text-text-secondary">
-                  IMIĘ I NAZWISKO
+                  IMIE I NAZWISKO
                 </span>
                 <EditText
-                  placeholder="Twoje imię i nazwisko"
+                  placeholder="Twoje imie i nazwisko"
                   value={formData.fullName}
                   onChange={handleChange('fullName')}
+                  className="h-[56px]"
                 />
               </label>
 
-              <label className="flex flex-col gap-3">
+              <label className="flex flex-col gap-[10px]">
                 <span className="font-[Clash Display] text-sm font-semibold uppercase tracking-[0.24em] text-text-secondary">
                   TEMAT ROZMOWY
                 </span>
                 <EditText
-                  placeholder="O czym chcesz porozmawiać?"
+                  placeholder="O czym chcesz porozmawiac?"
                   value={formData.subject}
                   onChange={handleChange('subject')}
+                  className="h-[56px]"
                 />
               </label>
             </div>
 
-            <label className="flex flex-col gap-3">
+            <label className="flex flex-col gap-[10px]">
               <span className="font-[Clash Display] text-sm font-semibold uppercase tracking-[0.24em] text-text-secondary">
-                WIADOMOŚĆ
+                WIADOMOSC
               </span>
               <TextArea
                 rows={6}
-                placeholder="Napisz swoją wiadomość..."
+                placeholder="Napisz swoja wiadomosc..."
                 value={formData.message}
                 onChange={handleChange('message')}
+                className="min-h-[188px]"
               />
             </label>
 
-            <div className="flex flex-col gap-4">
+            <div className="mt-[20px] flex flex-col gap-[20px]">
               <button
                 type="button"
                 onClick={toggleConsent}
@@ -139,20 +144,20 @@ const ContactSection = () => {
                   ) : null}
                 </span>
                 <span className="max-w-[90%]">
-                  Wyrażam zgodę na przetwarzanie moich danych osobowych w
-                  postaci imienia, nazwiska, adresu e-mail i nr tel. (jeżeli
-                  został podany), podanych w powyższym formularzu, zgodnie z
-                  przepisami rozporządzenia Parlamentu Europejskiego i Rady (UE)
-                  2016/679 z dnia 27 kwietnia 2016 r. w sprawie ochrony osób
-                  fizycznych w związku z przetwarzaniem danych osobowych i w
-                  sprawie swobodnego przepływu takich danych oraz uchylenia
-                  dyrektywy 95/46/WE (ogólne rozporządzenie o ochronie danych),
+                  Wyrazam zgode na przetwarzanie moich danych osobowych w
+                  postaci imienia, nazwiska, adresu e-mail i nr tel. (jezeli
+                  zostal podany), podanych w powyzszym formularzu, zgodnie z
+                  przepisami rozporzadzenia Parlamentu Europejskiego i Rady (UE)
+                  2016/679 z dnia 27 kwietnia 2016 r. w sprawie ochrony osob
+                  fizycznych w zwiazku z przetwarzaniem danych osobowych i w
+                  sprawie swobodnego przeplywu takich danych oraz uchylenia
+                  dyrektywy 95/46/WE (ogolne rozporzadzenie o ochronie danych),
                   Dz. Urz. UE z 4.5.2016 r. L 119, str. 1), w celu udzielenia
-                  odpowiedzi na złożone zapytanie. Żądanie usunięcia danych
-                  proszę kierować na adres biuro@realestate.com Informujemy, że:
+                  odpowiedzi na zlozone zapytanie. Zadanie usuniecia danych
+                  prosze kierowac na adres biuro@realestate.com Informujemy, ze:
                   1. Administratorem Pani/Pana danych osobowych jest RealEstate
-                  sp. z o.o. z siedzibą w Poznaniu przy ul. Długiej 5 lok. 25,
-                  01-200 Poznań (KRS nr 0001000000) (dalej "Administrator")
+                  sp. z o.o. z siedziba w Poznaniu przy ul. Dlugiej 5 lok. 25,
+                  01-200 Poznan (KRS nr 0001000000) (dalej &quot;Administrator&quot;)
                   e-mail: biuro@realestate.com
                 </span>
               </button>
@@ -168,22 +173,9 @@ const ContactSection = () => {
             <Button
               type="submit"
               variant="primary"
-              size="large"
-              className="mt-4 inline-flex w-full max-w-[320px] items-center justify-center gap-3 px-9 py-4 font-[Clash Display] uppercase tracking-[0.24em]"
+              className="mt-[32px] w-full max-w-[320px] px-[32px] py-[18px] uppercase tracking-[0.24em]"
             >
-              WYŚLIJ WIADOMOŚĆ
-              <svg
-                className="h-5 w-5 rotate-[-45deg]"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M5 12h14" />
-                <path d="M12 5l7 7-7 7" />
-              </svg>
+              WYSLIJ WIADOMOSC
             </Button>
           </form>
         </div>
@@ -193,3 +185,5 @@ const ContactSection = () => {
 };
 
 export default ContactSection;
+
+
