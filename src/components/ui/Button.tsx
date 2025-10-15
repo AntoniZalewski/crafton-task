@@ -9,18 +9,30 @@ type ButtonProps = React.ComponentPropsWithoutRef<"button"> & {
   href?: string;
   variant?: "primary" | "secondary";
   className?: string;
-  /** wyjątkowo, jeśli chcesz ukryć ikonę w primary */
+  /** jeśli chcesz ukryć ikonę w primary: showIcon={false} */
   showIcon?: boolean;
 };
 
 const baseClasses =
   "inline-flex items-center justify-center gap-[10px] rounded-[9999px] font-display text-[15px] font-medium uppercase leading-[100%] tracking-[-0.02em] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-white)]";
 
+/** Primary pozostaje jak było; Secondary dopracowane pod makietę */
 const variantClasses: Record<NonNullable<ButtonProps["variant"]>, string> = {
-  primary:
-    `${baseClasses} btn btn-primary h-[var(--btn-h)] px-[32px] py-[18px] text-[var(--btn-text-color)]`,
-  secondary:
-    `${baseClasses} h-[var(--btn-h)] border border-[var(--color-stroke)] bg-[#FEFEFE] px-[32px] py-[18px] text-[var(--color-dark)] hover:bg-[var(--color-surface-subtle)]`,
+  primary: `${baseClasses} btn btn-primary h-[var(--btn-h)] px-[32px] py-[18px] text-[var(--btn-text-color)]`,
+
+  // Secondary — jasny przycisk z obrysem (Default/ Hover/ Active/ Disabled)
+  secondary: [
+    baseClasses,
+    "h-[var(--btn-h)] px-[32px] py-[18px]",
+    // default
+    "border border-[var(--color-stroke)] bg-[var(--color-surface-light)] text-[var(--color-dark)]",
+    // hover (bardzo subtelny fill, „zgaszony” tekst)
+    "hover:bg-[rgba(49,111,175,0.06)] hover:text-[rgba(17,39,61,0.18)]",
+    // active / clicked (niebieskawy fill, lekko niebieski tekst i obrys)
+    "active:bg-[rgba(49,111,175,0.16)] active:text-[rgba(49,111,175,0.75)] active:border-[rgba(49,111,175,0.35)]",
+    // disabled
+    "disabled:opacity-55 disabled:cursor-not-allowed",
+  ].join(" "),
 };
 
 const Button = ({
@@ -34,7 +46,7 @@ const Button = ({
 }: ButtonProps) => {
   const classes = [variantClasses[variant], className].filter(Boolean).join(" ");
 
-  // 20x20 box + strzałka 13.2x13.2 w środku (zgodnie z Figma)
+  // 20x20 box + strzałka 13.2x13.2 w środku (tylko dla primary)
   const Arrow = (
     <span
       className="inline-flex items-center justify-center"

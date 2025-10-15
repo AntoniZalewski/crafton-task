@@ -21,8 +21,15 @@ const initialFormState: FormData = {
   consent: false,
 };
 
+// Prosta walidacja e-maila (wystarczająca do UX; backend niech i tak waliduje ponownie)
+const isValidEmail = (value: string) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+
 const ContactSection = () => {
   const [formData, setFormData] = useState<FormData>(initialFormState);
+  const [emailTouched, setEmailTouched] = useState(false);
+
+  const emailInvalid = emailTouched && !isValidEmail(formData.email) && formData.email.length > 0;
 
   const handleChange =
     (field: keyof FormData) =>
@@ -38,17 +45,47 @@ const ContactSection = () => {
       }));
     };
 
-  const toggleConsent = () => {
-    setFormData((prev) => ({ ...prev, consent: !prev.consent }));
+  const handleEmailBlur = () => {
+    setEmailTouched(true);
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Submission placeholder
+    // włącz walidację e-maila przy submit
+    setEmailTouched(true);
+
+    if (!isValidEmail(formData.email)) {
+      // nie wysyłamy — pokaże się stan error na e-mailu
+      return;
+    }
+
+    // TODO: wyślij formularz (fetch/axios)
+    // console.log(formData);
   };
 
+  // Wspólny „default/focus/disabled” wygląd
+  const baseInput =
+    'h-[50px] rounded-input border bg-[var(--color-white)] px-[12px] ' +
+    'font-sans text-[16px] leading-[150%] tracking-[-0.02em] text-[var(--color-dark)] ' +
+    'border-[var(--color-stroke)] placeholder:text-[var(--color-text)]/55 ' +
+    'focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/30 ' +
+    'disabled:bg-[var(--color-surface-subtle)] disabled:text-[var(--color-text)]/35 disabled:placeholder:text-[var(--color-text)]/30 disabled:border-[var(--color-stroke-light)] ' +
+    'transition-colors';
+
+  // Czerwony stan error tylko dla pola e-mail
+  const emailClasses = [
+    baseInput,
+    emailInvalid &&
+      'border-[#8E1C16] bg-[#FCEEEE] text-[#8E1C16] placeholder-[#8E1C16]/70 focus:border-[#8E1C16] focus:ring-[#8E1C16]/30',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
-    <section id="kontakt" className="w-full bg-[var(--color-surface-subtle)] px-[clamp(24px,6vw,80px)] py-[80px]">
+    <section
+      id="kontakt"
+      className="w-full bg-[var(--color-surface-subtle)] px-[clamp(24px,6vw,80px)] py-[80px]"
+    >
       <span id="poznajmy" className="block h-0" aria-hidden="true" />
       <div className="mx-auto w-full max-w-[1280px]">
         <div className="pb-[20px]">
@@ -59,109 +96,127 @@ const ContactSection = () => {
 
         <form
           onSubmit={handleSubmit}
+          noValidate
           className="flex flex-col gap-[42px] rounded-panel border border-[var(--color-white)] bg-[#F6FBFF] px-[32px] py-[46px] shadow-[0_24px_48px_rgba(17,_39,_61,_0.08)]"
         >
           <div>
             <h3 className="font-display text-[18px] font-medium uppercase leading-[160%] text-[var(--color-dark)]">
-              Zostaw nam wiadomosc
+              Zostaw nam wiadomość
             </h3>
           </div>
 
           <div className="flex flex-wrap gap-[20px]">
+            {/* E-MAIL (ma stan error) */}
             <label className="flex w-full flex-col gap-[10px] lg:w-[319px]">
               <span className="font-display text-[14px] font-medium uppercase leading-[20px] tracking-[-0.02em] text-[var(--color-text)]">
                 Adres e-mail
               </span>
               <EditText
                 type="email"
-                placeholder="Twoj adres e-mail"
+                placeholder="Twój adres E-mail"
                 value={formData.email}
                 onChange={handleChange('email')}
-                className="h-[50px] rounded-input border border-[var(--color-stroke)] bg-[var(--color-white)] px-[12px] font-sans text-[16px] leading-[150%] tracking-[-0.02em] text-[var(--color-dark)] focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/30"
+                onBlur={handleEmailBlur}
+                className={emailClasses}
+                aria-invalid={emailInvalid || undefined}
+                aria-describedby={emailInvalid ? 'email-error' : undefined}
+                required
               />
+              {emailInvalid && (
+                <p
+                  id="email-error"
+                  className="mt-[6px] text-[13px] leading-[18px] text-[#8E1C16]"
+                >
+                  Podaj poprawny adres e-mail (np. imie@domena.pl).
+                </p>
+              )}
             </label>
 
+            {/* IMIĘ I NAZWISKO */}
             <label className="flex w-full flex-col gap-[10px] lg:w-[330px]">
               <span className="font-display text-[14px] font-medium uppercase leading-[20px] tracking-[-0.02em] text-[var(--color-text)]">
-                Imie i nazwisko
+                Imię i nazwisko
               </span>
               <EditText
-                placeholder="Twoje imie i nazwisko"
+                placeholder="Twoje imię i nazwisko"
                 value={formData.fullName}
                 onChange={handleChange('fullName')}
-                className="h-[50px] rounded-input border border-[var(--color-stroke)] bg-[var(--color-white)] px-[12px] font-sans text-[16px] leading-[150%] tracking-[-0.02em] text-[var(--color-dark)] focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/30"
+                className={baseInput}
               />
             </label>
 
+            {/* TEMAT */}
             <label className="flex w-full flex-col gap-[10px] lg:w-[527px]">
               <span className="font-display text-[14px] font-medium uppercase leading-[20px] tracking-[-0.02em] text-[var(--color-text)]">
                 Temat rozmowy
               </span>
               <EditText
-                placeholder="O czym chcesz porozmawiac?"
+                placeholder="O czym chcesz porozmawiać?"
                 value={formData.subject}
                 onChange={handleChange('subject')}
-                className="h-[50px] rounded-input border border-[var(--color-stroke)] bg-[var(--color-white)] px-[12px] font-sans text-[16px] leading-[150%] tracking-[-0.02em] text-[var(--color-dark)] focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/30"
+                className={baseInput}
               />
             </label>
           </div>
 
+          {/* WIADOMOŚĆ */}
           <label className="flex flex-col gap-[10px]">
             <span className="font-display text-[14px] font-medium uppercase leading-[20px] tracking-[-0.02em] text-[var(--color-text)]">
-              Wiadomosc
+              Wiadomość
             </span>
             <TextArea
               rows={6}
-              placeholder="Napisz swoja wiadomosc..."
+              placeholder="Napisz swoją wiadomość…"
               value={formData.message}
               onChange={handleChange('message')}
-              className="h-[152px] rounded-input border border-[var(--color-stroke)] bg-[var(--color-white)] p-[12px] font-sans text-[16px] leading-[150%] tracking-[-0.02em] text-[var(--color-dark)] focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/30"
+              className={
+                baseInput.replace('h-[50px]', 'h-[152px]').replace('px-[12px]', 'p-[12px]')
+              }
             />
           </label>
 
-          <div className="flex flex-col gap-[20px]">
-            <button
-              type="button"
-              onClick={toggleConsent}
-              className="body-xs font-sans flex items-start gap-[12px] text-left tracking-[-0.02em] text-text-secondary"
-            >
-              <span
-                className={`flex h-5 w-5 items-center justify-center rounded-[6px] border-2 ${
-                  formData.consent
-                    ? 'border-[var(--color-primary)] bg-[var(--color-primary)]'
-                    : 'border-[var(--color-stroke)] bg-[var(--color-white)]'
-                } transition-colors duration-200`}
-              >
-                {formData.consent ? (
-                  <svg
-                    className="h-3 w-3 text-[var(--color-white)]"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path d="M16.707 5.293a1 1 0 0 1 0 1.414l-8 8a1 1 0 0 1-1.414 0l-4-4A1 1 0 0 1 4.707 9.293L8 12.586l7.293-7.293a1 1 0 0 1 1.414 0Z" />
-                  </svg>
-                ) : null}
-              </span>
-              <span className="body-xs font-sans max-w-[90%] tracking-[-0.02em] text-text-secondary">
-                Wyrazam zgode na przetwarzanie moich danych osobowych w celu udzielenia odpowiedzi na zlozone zapytanie. Zzadanie usuniecia danych prosze kierowac na adres biuro@realestate.com. Administratorem danych jest RealEstate sp. z o.o. z siedziba w Poznaniu, ul. Dluga 5 lok. 25, 01-200 Poznan.
-              </span>
-            </button>
+          {/* ZGODA RODO — okrągły znacznik jak w designie */}
+          <label className="body-xs font-sans flex items-start gap-[12px] text-left tracking-[-0.02em] text-text-secondary">
             <input
               type="checkbox"
               checked={formData.consent}
-              onChange={() => toggleConsent()}
-              className="hidden"
-              aria-hidden="true"
+              onChange={handleChange('consent')}
+              className="peer sr-only"
             />
-          </div>
+            <span
+              className="
+                relative inline-flex h-5 w-5 items-center justify-center rounded-full
+                border border-[var(--color-stroke)]
+                bg-[var(--color-white)]
+                transition-colors duration-200
+                peer-checked:border-[var(--color-primary)]
+              "
+              aria-hidden="true"
+            >
+              <span
+                className={`
+                  block rounded-full transition-all duration-200
+                  ${formData.consent
+                    ? 'h-[10px] w-[10px] bg-[var(--color-primary)]'
+                    : 'h-[8px] w-[8px] border-2 border-[var(--color-stroke-light)]'}
+                `}
+              />
+            </span>
+
+            <span className="body-xs font-sans max-w-[90%] tracking-[-0.02em] text-text-secondary">
+              Wyrażam zgodę na przetwarzanie moich danych osobowych w celu udzielenia odpowiedzi na
+              złożone zapytanie. Żądanie usunięcia danych proszę kierować na adres
+              biuro@realestate.com. Administratorem danych jest RealEstate sp. z o.o., ul. Długa 5 lok.
+              25, 01-200 Poznań.
+            </span>
+          </label>
 
           <Button
             type="submit"
             variant="primary"
             className="h-[56px] w-full max-w-[320px] justify-center gap-[10px] rounded-pill px-[32px] py-[18px]"
           >
-            WYSLIJ WIADOMOSC
+            WYŚLIJ WIADOMOŚĆ
           </Button>
         </form>
       </div>
@@ -170,4 +225,3 @@ const ContactSection = () => {
 };
 
 export default ContactSection;
-

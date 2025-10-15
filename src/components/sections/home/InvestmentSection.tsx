@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import Button from '../../ui/Button';
 
 type Slide = {
@@ -38,46 +38,80 @@ const slides: Slide[] = [
   },
 ];
 
-const ArrowCircle = ({
+/** Okrągły przycisk nawigacji z ikoną strzałki.
+ *  Stany:
+ *   - default: biały bg, ciemna obwódka/ikona
+ *   - hover: delikatny jasny bg
+ *   - active: jeszcze jaśniejszy bg + jaśniejsza ikona/obwódka
+ *   - disabled: szare obramowanie/ikona (brak hover/active, kursor not-allowed)
+ */
+function ArrowCircle({
   direction,
   onClick,
   ariaLabel,
+  disabled = false,
 }: {
   direction: 'prev' | 'next';
   onClick: () => void;
   ariaLabel: string;
-}) => (
-  <button
-    type="button"
-    onClick={onClick}
-    aria-label={ariaLabel}
-    className="flex h-[53px] w-[53px] items-center justify-center rounded-full border border-[#11273D] bg-[var(--color-white)] text-[#11273D] transition-colors duration-150 hover:bg-[var(--color-surface-subtle)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-offset-2"
-  >
-    <svg
-      width={12}
-      height={14}
-      viewBox="0 0 12 14"
-      fill="none"
-      className={direction === 'next' ? '' : 'rotate-180'}
-      aria-hidden="true"
-    >
-      <path
-        d="M1.5 1.75L9.25 7l-7.75 5.25"
-        stroke="currentColor"
-        strokeWidth={1.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  </button>
-);
+  disabled?: boolean;
+}) {
+  const base =
+    'flex h-[53px] w-[53px] items-center justify-center rounded-full border transition-colors duration-150 focus:outline-none focus-visible:outline-none';
 
-const InvestmentSection = () => {
+  // hover: bardzo jasny niebieski, border i ikona ciemne
+  // active: delikatnie jaśniejszy, bez niebieskiego ringa
+  const able =
+    'border-[#11273D] text-[#11273D] bg-[var(--color-white)] ' +
+    'hover:bg-[#F3F8FE] active:bg-[#EAF2FB] ' +
+    'active:text-[#6D8093] active:border-[#B7C8D8]';
+
+  const dis =
+    'cursor-not-allowed border-[#E6EEF6] text-[#E6EEF6] bg-[var(--color-white)]';
+
+  return (
+    <button
+      type="button"
+      aria-label={ariaLabel}
+      aria-disabled={disabled}
+      disabled={disabled}
+      onClick={disabled ? undefined : onClick}
+      className={`${base} ${disabled ? dis : able}`}
+    >
+      <svg
+        width={12}
+        height={14}
+        viewBox="0 0 12 14"
+        fill="none"
+        className={direction === 'next' ? '' : 'rotate-180'}
+        aria-hidden="true"
+      >
+        <path
+          d="M1.5 1.75L9.25 7l-7.75 5.25"
+          stroke="currentColor"
+          strokeWidth={1.5}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </button>
+  );
+}
+
+
+export default function InvestmentSection() {
   const [index, setIndex] = useState(0);
   const current = slides[index];
 
-  const goPrev = () => setIndex((i) => (i + slides.length - 1) % slides.length);
-  const goNext = () => setIndex((i) => (i + 1) % slides.length);
+  const isFirst = useMemo(() => index === 0, [index]);
+  const isLast = useMemo(() => index === slides.length - 1, [index]);
+
+  const goPrev = () => {
+    if (!isFirst) setIndex((i) => i - 1);
+  };
+  const goNext = () => {
+    if (!isLast) setIndex((i) => i + 1);
+  };
 
   return (
     <section className="w-full bg-[var(--color-white)]">
@@ -99,15 +133,9 @@ const InvestmentSection = () => {
           {/* lewa kolumna: radius 12px */}
           <div className="flex w-full flex-col gap-[10px] rounded-[12px] bg-[var(--color-white)] p-[24px] lg:h-[540px] lg:w-[515px] lg:p-[36px]">
             <div className="flex flex-col gap-[10px]" aria-live="polite">
-              {/* Lokalizacja: 50×50, border 7px, ikona 12×19 */}
+              {/* Lokalizacja: 50×50, ring 7, ikona 12×19 */}
               <div className="flex items-center gap-[10px]">
-                <span
-                  className="
-                    relative inline-flex h-[50px] w-[50px] items-center justify-center
-                    rounded-full bg-[#BFD2E6] border-[7px] border-[#EEF6FF]
-                  "
-                  aria-hidden="true"
-                >
+                <span className="relative inline-flex h-[50px] w-[50px] items-center justify-center rounded-full bg-[#BFD2E6] ring-[7px] ring-[#EEF6FF]">
                   <img
                     src="/icon-lokalizacja.svg"
                     alt=""
@@ -117,7 +145,6 @@ const InvestmentSection = () => {
                     aria-hidden="true"
                   />
                 </span>
-
                 <span className="font-display text-[15px] font-medium leading-[100%] text-[var(--color-dark)]">
                   {current.city}
                 </span>
@@ -141,8 +168,18 @@ const InvestmentSection = () => {
             </div>
 
             <div className="flex items-center gap-[12px] pt-[60px]">
-              <ArrowCircle direction="prev" onClick={goPrev} ariaLabel="Poprzedni slajd" />
-              <ArrowCircle direction="next" onClick={goNext} ariaLabel="Następny slajd" />
+              <ArrowCircle
+                direction="prev"
+                onClick={goPrev}
+                ariaLabel="Poprzedni slajd"
+                disabled={isFirst}
+              />
+              <ArrowCircle
+                direction="next"
+                onClick={goNext}
+                ariaLabel="Następny slajd"
+                disabled={isLast}
+              />
             </div>
           </div>
 
@@ -166,6 +203,4 @@ const InvestmentSection = () => {
       </div>
     </section>
   );
-};
-
-export default InvestmentSection;
+}

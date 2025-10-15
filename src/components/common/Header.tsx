@@ -59,11 +59,7 @@ const Header = () => {
                 >
                   <span>{link.label}</span>
 
-                  {/* Mała strzałka jak w Figmie:
-                     - kontener 18x18
-                     - wektor ~9x9 (mniejszy w środku)
-                     - kolor dziedziczony (currentColor = --color-dark)
-                  */}
+                  {/* Mała strzałka jak w figmie: box 18x18, wektor ~9x9 */}
                   {link.hasDropdown ? (
                     <span
                       className="inline-flex translate-y-[1px] items-center justify-center"
@@ -81,7 +77,7 @@ const Header = () => {
                         width={9}
                         height={9}
                         style={{
-                          width: '9px',   // ~50% z 18 zgodnie z rysunkiem (wektor mniejszy w boxie)
+                          width: '9px',
                           height: '9px',
                           display: 'block',
                           objectFit: 'contain',
