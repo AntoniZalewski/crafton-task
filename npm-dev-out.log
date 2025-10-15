@@ -1,0 +1,32 @@
+
+> crafton_copy@0.1.0 dev
+> next dev --turbopack
+
+   ▲ Next.js 15.5.4 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://10.80.81.121:3000
+
+ ✓ Starting...
+ ✓ Ready in 1769ms
+ ○ Compiling / ...
+ ✓ Compiled / in 3.4s
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 1393ms
+ GET / 500 in 5134ms
+ ✓ Compiled in 71ms
+ ✓ Compiled / in 63ms
+ GET / 200 in 698ms
+ GET / 200 in 321ms
+ ✓ Compiled in 85ms
+ GET / 200 in 326ms
+ ✓ Compiled in 52ms
+ GET / 200 in 565ms
+ GET / 200 in 154ms
+ GET / 200 in 140ms
+ GET / 200 in 136ms
+ ✓ Compiled /_not-found/page in 288ms
+ GET /kontakt 404 in 405ms
+ GET /kontakt 404 in 192ms
+ GET /kontakt 404 in 164ms
+ GET / 200 in 220ms
+ GET /kontakt 404 in 169ms

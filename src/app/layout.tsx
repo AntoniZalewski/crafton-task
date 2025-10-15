@@ -1,17 +1,5 @@
-import { Inter, Instrument_Sans } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-});
-
-const instrumentSans = Instrument_Sans({
-  variable: "--font-instrument-sans",
-  subsets: ["latin"],
-  weight: ["400", "500"],
-});
+import { clashDisplay, instrumentSans } from "./fonts";
 
 export const metadata = {
   title: "Premium Real Estate Investment Opportunities | Crafton Poland",
@@ -31,16 +19,17 @@ export const metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${inter.variable} ${instrumentSans.variable} antialiased`}
-      >
+    <html lang="pl" className={`${clashDisplay.variable} ${instrumentSans.variable}`}>
+      <head>
+        <meta charSet="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
+      <body className="antialiased">
         {children}
       </body>
     </html>
   );
 }
+

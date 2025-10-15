@@ -43,10 +43,11 @@ const variantClasses: Record<TextAreaVariant, string> = {
     'border-emerald-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200',
 };
 
+// Typography audit: align textarea text to Instrument Sans body scale.
 const sizeClasses: Record<TextAreaSize, string> = {
-  small: 'text-sm px-3 py-2 min-h-[120px] rounded-md',
-  medium: 'text-md px-4 py-3 min-h-[140px] rounded-lg',
-  large: 'text-lg px-5 py-4 min-h-[180px] rounded-xl',
+  small: 'font-sans body-m px-3 py-2 min-h-[120px] rounded-md',
+  medium: 'font-sans body-l px-4 py-3 min-h-[140px] rounded-lg',
+  large: 'font-sans body-xl px-5 py-4 min-h-[180px] rounded-xl',
 };
 
 export interface TextAreaProps
@@ -120,3 +121,5 @@ const TextArea = ({
 };
 
 export default TextArea;
+// Typography audit: textarea content now follows Instrument Sans body scale across size variants.
+

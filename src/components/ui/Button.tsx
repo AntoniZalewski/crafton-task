@@ -1,84 +1,87 @@
-'use client';
+﻿/* eslint-disable @next/next/no-img-element */
+"use client";
 
-/* eslint-disable @next/next/no-img-element */
+import Link from "next/link";
+import React from "react";
 
-import Link from 'next/link';
-import type { ButtonHTMLAttributes, ReactNode } from 'react';
-
-type ButtonProps = {
-  as?: 'button' | 'link';
+type ButtonProps = React.ComponentPropsWithoutRef<"button"> & {
+  as?: "button" | "a" | "link";
   href?: string;
-  variant?: 'primary' | 'secondary';
-  size?: 'md';
-  rightIcon?: ReactNode;
+  variant?: "primary" | "secondary";
   className?: string;
-  children: React.ReactNode;
-} & ButtonHTMLAttributes<HTMLButtonElement>;
-
-const clsx = (...classes: Array<string | false | null | undefined>) =>
-  classes.filter(Boolean).join(' ');
-
-const sizeClasses: Record<string, string> = {
-  md: 'h-[56px] px-[32px]',
+  /** wyjątkowo, jeśli chcesz ukryć ikonę w primary */
+  showIcon?: boolean;
 };
 
-const variantClasses: Record<'primary' | 'secondary', string> = {
+const baseClasses =
+  "inline-flex items-center justify-center gap-[10px] rounded-[9999px] font-display text-[15px] font-medium uppercase leading-[100%] tracking-[-0.02em] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-white)]";
+
+const variantClasses: Record<NonNullable<ButtonProps["variant"]>, string> = {
   primary:
-    'bg-[#346EAE] text-white border-0 hover:bg-[#2e66a3] focus-visible:ring-[#346EAE]',
+    `${baseClasses} btn btn-primary h-[var(--btn-h)] px-[32px] py-[18px] text-[var(--btn-text-color)]`,
   secondary:
-    'bg-white text-[#0A2030] border border-[1.5px] border-[#D9DEE5] hover:bg-[#F7FAFC] focus-visible:ring-[#346EAE]',
+    `${baseClasses} h-[var(--btn-h)] border border-[var(--color-stroke)] bg-[#FEFEFE] px-[32px] py-[18px] text-[var(--color-dark)] hover:bg-[var(--color-surface-subtle)]`,
 };
-
-const defaultIcon = (
-  <img
-    src="/arrow_up_right.svg"
-    alt=""
-    aria-hidden="true"
-    className="h-[20px] w-[20px]"
-  />
-);
 
 const Button = ({
-  as = 'button',
-  href = '#',
-  variant = 'primary',
-  size = 'md',
-  rightIcon,
+  as = "button",
+  href,
+  variant = "primary",
   className,
   children,
-  ...rest
+  showIcon = true,
+  ...props
 }: ButtonProps) => {
-  const { onClick, ...buttonProps } = rest;
-  const iconElement =
-    rightIcon === undefined
-      ? variant === 'primary'
-        ? defaultIcon
-        : null
-      : rightIcon;
-  const showIcon =
-    iconElement !== null && iconElement !== false && iconElement !== undefined;
+  const classes = [variantClasses[variant], className].filter(Boolean).join(" ");
 
-  const classes = clsx(
-    'inline-flex items-center justify-center whitespace-nowrap font-[Clash Display] text-[15px] font-medium leading-[1.2] rounded-[999px] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white',
-    sizeClasses[size] ?? sizeClasses.md,
-    variantClasses[variant],
-    showIcon ? 'gap-[10px]' : undefined,
-    className
+  // 20x20 box + strzałka 13.2x13.2 w środku (zgodnie z Figma)
+  const Arrow = (
+    <span
+      className="inline-flex items-center justify-center"
+      style={{ width: 20, height: 20, flexShrink: 0, flexGrow: 0 }}
+      aria-hidden="true"
+    >
+      <img
+        src="/arrow_up_right.svg"
+        alt=""
+        className="btn__icon"
+        width={13.2}
+        height={13.2}
+        style={{
+          width: "13.2px",
+          height: "13.2px",
+          objectFit: "contain",
+          verticalAlign: "middle",
+          display: "block",
+        }}
+      />
+    </span>
   );
 
-  if (as === 'link') {
+  const Inner = (
+    <span className="inline-flex items-center gap-[10px]">
+      {children}
+      {variant === "primary" && showIcon ? Arrow : null}
+    </span>
+  );
+
+  if (as === "link" && href) {
     return (
-      <Link href={href} onClick={onClick} className={classes}>
-        <span>{children}</span>
-        {showIcon ? iconElement : null}
+      <Link href={href} className={classes}>
+        {Inner}
       </Link>
     );
   }
-
+  if (as === "a" && href) {
+    return (
+      <a href={href} className={classes} {...props}>
+        {Inner}
+      </a>
+    );
+  }
   return (
-    <button onClick={onClick} className={classes} {...buttonProps}>
-      <span>{children}</span>
-      {showIcon ? iconElement : null}
+    <button type="button" className={classes} {...props}>
+      {Inner}
     </button>
   );
 };

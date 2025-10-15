@@ -1,23 +1,34 @@
-import Button from "../../ui/Button";
+import Button from '../../ui/Button';
 
 const HeroSection = () => {
   return (
-    <section className="w-full bg-secondary-white">
-      <div className="mx-auto w-full max-w-[1280px] px-[clamp(24px,6vw,80px)] py-20">
-        <h1 className="max-w-[1038px] font-[Clash Display] text-[clamp(36px,6vw,75px)] font-medium leading-[1.2] tracking-[-0.02em] text-[#0A2030]">
-          Twoj klucz do lepszej przyszlosci
+    <section className="w-full bg-[var(--color-white)]">
+      <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-[20px] px-[clamp(24px,6vw,80px)] py-[clamp(64px,12vw,80px)] lg:px-[120px] lg:py-[80px]">
+        <h1 className="h1-hero font-display font-medium uppercase tracking-[-0.02em] text-[var(--color-dark)] max-w-[1038px]">
+          TWÓJ KLUCZ DO LEPSZEJ PRZYSZŁOŚCI
         </h1>
 
-        <p className="mt-[20px] max-w-[648px] font-[var(--font-instrument-sans)] text-[18px] leading-[1.6] text-[#0A2030]/80">
-          W Crafton wierzymy, ze nieruchomosc to cos wiecej niz adres. To przestrzen, w ktorej rodza sie nowe historie i rozwijaja sie mozliwosci dla Ciebie i Twojej rodziny.
+        <p className="body-xl font-sans max-w-[648px] tracking-[-0.02em] text-text-secondary">
+          W RealEstate nieruchomości to coś więcej niż tylko budynki - to miejsca, w których powstają historie, rozwijają się biznesy i spełniają marzenia.
         </p>
 
-        <div className="mt-[32px] flex flex-col items-start gap-4 lg:flex-row lg:items-center lg:gap-[20px]">
-          <Button as="link" href="#inwestycje" variant="primary">
-            Nasze inwestycje
+        <div className="flex w-full flex-col items-start gap-[20px] pt-[10px] lg:w-[1280px] lg:flex-row lg:items-center">
+          <Button
+            as="link"
+            href="#inwestycje"
+            variant="primary"
+            className="w-full max-w-[252px] lg:w-auto"
+          >
+            NASZE INWESTYCJE
           </Button>
-          <Button as="link" href="#poznajmy" variant="secondary">
-            Poznajmy sie
+          <Button
+            as="link"
+            href="#poznajmy"
+            variant="secondary"
+            className="w-full max-w-[252px] lg:w-auto"
+            /* secondary nie ma ikony — nie trzeba nic podawać */
+          >
+            POZNAJMY SIĘ
           </Button>
         </div>
       </div>
@@ -26,4 +37,3 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
-

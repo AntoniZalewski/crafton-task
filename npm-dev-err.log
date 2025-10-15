@@ -1,0 +1,33 @@
+ ⨯ ./src/components/ui/Button.tsx:4:1
+Module not found: Can't resolve 'clsx'
+[0m [90m 2 |[39m
+ [90m 3 |[39m [90m/* eslint-disable @next/next/no-img-element */[39m
+[31m[1m>[22m[39m[90m 4 |[39m [36mimport[39m cx [36mfrom[39m [32m"clsx"[39m[33m;[39m
+ [90m   |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 5 |[39m [36mimport[39m [33mLink[39m [36mfrom[39m [32m"next/link"[39m[33m;[39m
+ [90m 6 |[39m [36mimport[39m [33mReact[39m [36mfrom[39m [32m"react"[39m[33m;[39m
+ [90m 7 |[39m[0m
+
+
+
+Import traces:
+  Server Component:
+    ./src/components/ui/Button.tsx
+    ./src/components/sections/home/PropertyAdvisorySection.tsx
+    ./src/app/page.tsx
+
+  Client Component Browser:
+    ./src/components/ui/Button.tsx [Client Component Browser]
+    ./src/components/sections/home/InvestmentSection.tsx [Client Component Browser]
+    ./src/components/sections/home/InvestmentSection.tsx [Server Component]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/ui/Button.tsx [Client Component SSR]
+    ./src/components/sections/home/InvestmentSection.tsx [Client Component SSR]
+    ./src/components/sections/home/InvestmentSection.tsx [Server Component]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+

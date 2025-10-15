@@ -43,10 +43,11 @@ const variantClasses: Record<EditTextVariant, string> = {
     'border-emerald-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200',
 };
 
+// Typography audit: map input sizes to Instrument Sans body scale.
 const sizeClasses: Record<EditTextSize, string> = {
-  small: 'text-sm px-3 py-2 rounded-md',
-  medium: 'text-md px-4 py-3 rounded-lg',
-  large: 'text-lg px-5 py-4 rounded-xl',
+  small: 'font-sans body-m px-3 py-2 rounded-md',
+  medium: 'font-sans body-l px-4 py-3 rounded-lg',
+  large: 'font-sans body-xl px-5 py-4 rounded-xl',
 };
 
 export interface EditTextProps
@@ -117,3 +118,7 @@ const EditText = ({
 };
 
 export default EditText;
+// Typography audit: input text adopts Instrument Sans with body-scale sizing (14/16/18px at 150-160% line-height).
+
+
+
