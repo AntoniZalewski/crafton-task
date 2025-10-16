@@ -105,9 +105,9 @@ export default function ContactSection() {
       {/* Dodatkowa kotwica dla linków typu #poznajmy – zatrzymanie pod headerem */}
       <span id="poznajmy" className="block h-0 scroll-mt-[82px]" aria-hidden="true" />
 
-      <div className="mx-container flex w-full flex-col items-center">
+      <div className="mx-container flex w-full flex-col items-center text-center lg:items-start lg:text-left">
         {/* Tytuł sekcji */}
-        <div className="pb-[20px] text-center">
+        <div className="pb-[20px]">
           <h2 className="use-clash h1 text-balance text-[var(--color-dark)]">
             POROZMAWIAJMY
           </h2>
@@ -117,7 +117,7 @@ export default function ContactSection() {
         <form
           onSubmit={handleSubmit}
           noValidate
-          className="flex w-full max-w-[940px] flex-col gap-[32px] rounded-panel border border-[var(--color-white)] bg-[#F6FBFF] px-[24px] py-[36px] shadow-[0_24px_48px_rgba(17,_39,_61,_0.08)] sm:gap-[42px] sm:px-[32px] sm:py-[46px]"
+          className="flex w-full max-w-[940px] flex-col gap-[32px] rounded-panel border border-[var(--color-white)] bg-[#F6FBFF] px-[24px] py-[36px] text-left shadow-[0_24px_48px_rgba(17,_39,_61,_0.08)] sm:gap-[42px] sm:px-[32px] sm:py-[46px]"
         >
           <div>
             <h3 className="use-clash h4 text-balance text-[var(--color-dark)] text-center sm:text-left">
@@ -128,7 +128,7 @@ export default function ContactSection() {
           {/* Wiersz pól: e-mail / imię i nazwisko / temat */}
           <div className="flex flex-wrap gap-[20px]">
             {/* E-MAIL */}
-            <label className="flex w-full flex-col gap-[10px] lg:w-[319px]">
+            <label className="flex w-full flex-col gap-[10px] text-left lg:w-[319px]">
               <span className="use-clash text-[14px] leading-[20px] tracking-[-0.02em] text-[var(--color-text)]">
                 Adres e-mail
               </span>
@@ -156,7 +156,7 @@ export default function ContactSection() {
             </label>
 
             {/* IMIĘ I NAZWISKO */}
-            <label className="flex w-full flex-col gap-[10px] lg:w-[330px]">
+            <label className="flex w-full flex-col gap-[10px] text-left lg:w-[330px]">
               <span className="use-clash text-[14px] leading-[20px] tracking-[-0.02em] text-[var(--color-text)]">
                 Imię i nazwisko
               </span>
@@ -170,7 +170,7 @@ export default function ContactSection() {
             </label>
 
             {/* TEMAT */}
-            <label className="flex w-full flex-col gap-[10px] lg:w-[527px]">
+            <label className="flex w-full flex-col gap-[10px] text-left lg:w-[527px]">
               <span className="use-clash text-[14px] leading-[20px] tracking-[-0.02em] text-[var(--color-text)]">
                 Temat rozmowy
               </span>
@@ -185,7 +185,7 @@ export default function ContactSection() {
           </div>
 
           {/* WIADOMOŚĆ */}
-          <label className="flex flex-col gap-[10px]">
+          <label className="flex flex-col gap-[10px] text-left">
             <span className="use-clash text-[14px] leading-[20px] tracking-[-0.02em] text-[var(--color-text)]">
               Wiadomość
             </span>

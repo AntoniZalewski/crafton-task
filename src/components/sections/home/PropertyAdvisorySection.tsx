@@ -37,8 +37,8 @@ export default function PropertyAdvisorySection() {
           id="advisory-heading"
           className="h1 text-balance uppercase text-[var(--color-dark)] text-center lg:text-left"
         >
-          <span className="block">PORADNIK</span>
-          <span className="block">PO NIERUCHOMOŚCIACH</span>
+          <span className="inline lg:block">PORADNIK</span>{' '}
+          <span className="inline lg:block">PO NIERUCHOMOŚCIACH</span>
         </h2>
 
         {/* Siatka kart 1→3 kolumny */}
