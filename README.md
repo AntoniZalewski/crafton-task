@@ -7,7 +7,7 @@ The project reproduces the provided Figma design with pixel-perfect precision, u
 
 ---
 
-## 🧭 Table of Contents
+##  Table of Contents
 - [Project Overview](#project-overview)
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
