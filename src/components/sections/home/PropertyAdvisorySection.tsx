@@ -35,10 +35,10 @@ export default function PropertyAdvisorySection() {
         {/* Nagłówek sekcji — Clash Display Medium 42/120, uppercase */}
         <h2
           id="advisory-heading"
-          className="h1 uppercase text-[var(--color-dark)]"
+          className="h1 text-balance uppercase text-[var(--color-dark)] text-center lg:text-left"
         >
-          <span className="block">PORADNIK</span>
-          <span className="block">PO NIERUCHOMOŚCIACH</span>
+          <span className="inline lg:block">PORADNIK</span>{' '}
+          <span className="inline lg:block">PO NIERUCHOMOŚCIACH</span>
         </h2>
 
         {/* Siatka kart 1→3 kolumny */}
@@ -47,7 +47,7 @@ export default function PropertyAdvisorySection() {
             <article
               key={article.id}
               aria-labelledby={`article-${article.id}-title`}
-              className="flex h-[505px] w-full max-w-[405px] flex-col gap-[20px] rounded-card border border-[var(--color-stroke)] bg-[var(--color-white)] p-[24px] shadow-[0_16px_28px_rgba(17,_39,_61,_0.06)]"
+              className="flex w-full max-w-[405px] flex-col gap-[20px] rounded-card border border-[var(--color-stroke)] bg-[var(--color-white)] p-[24px] shadow-[0_16px_28px_rgba(17,_39,_61,_0.06)] lg:h-[505px]"
             >
               {/* Obraz 357×222 (responsywnie przez aspect-ratio) */}
               <div className="relative aspect-[357/222] overflow-hidden rounded-[8px]">
@@ -64,13 +64,13 @@ export default function PropertyAdvisorySection() {
               {/* Tytuł kafelka — Clash Display Medium 18/160, uppercase */}
               <h3
                 id={`article-${article.id}-title`}
-                className="h4 uppercase text-[var(--color-dark)]"
+                className="h4 text-balance uppercase text-[var(--color-dark)] text-center lg:text-left"
               >
                 {article.title}
               </h3>
 
               {/* Lead — Instrument Sans / body-l */}
-              <p className="body-l text-text-secondary">
+              <p className="body-l text-balance text-text-secondary text-center lg:text-left">
                 Dowiedz się, jakie kroki podjąć przed zakupem i jak ocenić
                 potencjał inwestycyjny nieruchomości, aby podejmować świadome decyzje.
               </p>

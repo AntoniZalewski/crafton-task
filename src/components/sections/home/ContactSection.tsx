@@ -105,10 +105,10 @@ export default function ContactSection() {
       {/* Dodatkowa kotwica dla linków typu #poznajmy – zatrzymanie pod headerem */}
       <span id="poznajmy" className="block h-0 scroll-mt-[82px]" aria-hidden="true" />
 
-      <div className="mx-container w-full">
+      <div className="mx-container flex w-full flex-col items-center text-center lg:items-start lg:text-left">
         {/* Tytuł sekcji */}
         <div className="pb-[20px]">
-          <h2 className="use-clash text-[42px] leading-[120%] text-[var(--color-dark)]">
+          <h2 className="use-clash h1 text-balance text-[var(--color-dark)]">
             POROZMAWIAJMY
           </h2>
         </div>
@@ -117,10 +117,10 @@ export default function ContactSection() {
         <form
           onSubmit={handleSubmit}
           noValidate
-          className="flex flex-col gap-[42px] rounded-panel border border-[var(--color-white)] bg-[#F6FBFF] px-[32px] py-[46px] shadow-[0_24px_48px_rgba(17,_39,_61,_0.08)]"
+          className="flex w-full max-w-[940px] flex-col gap-[32px] rounded-panel border border-[var(--color-white)] bg-[#F6FBFF] px-[24px] py-[36px] text-left shadow-[0_24px_48px_rgba(17,_39,_61,_0.08)] sm:gap-[42px] sm:px-[32px] sm:py-[46px]"
         >
           <div>
-            <h3 className="use-clash text-[18px] leading-[160%] text-[var(--color-dark)]">
+            <h3 className="use-clash h4 text-balance text-[var(--color-dark)] text-center sm:text-left">
               Zostaw nam wiadomość
             </h3>
           </div>
@@ -128,7 +128,7 @@ export default function ContactSection() {
           {/* Wiersz pól: e-mail / imię i nazwisko / temat */}
           <div className="flex flex-wrap gap-[20px]">
             {/* E-MAIL */}
-            <label className="flex w-full flex-col gap-[10px] lg:w-[319px]">
+            <label className="flex w-full flex-col gap-[10px] text-left lg:w-[319px]">
               <span className="use-clash text-[14px] leading-[20px] tracking-[-0.02em] text-[var(--color-text)]">
                 Adres e-mail
               </span>
@@ -156,7 +156,7 @@ export default function ContactSection() {
             </label>
 
             {/* IMIĘ I NAZWISKO */}
-            <label className="flex w-full flex-col gap-[10px] lg:w-[330px]">
+            <label className="flex w-full flex-col gap-[10px] text-left lg:w-[330px]">
               <span className="use-clash text-[14px] leading-[20px] tracking-[-0.02em] text-[var(--color-text)]">
                 Imię i nazwisko
               </span>
@@ -170,7 +170,7 @@ export default function ContactSection() {
             </label>
 
             {/* TEMAT */}
-            <label className="flex w-full flex-col gap-[10px] lg:w-[527px]">
+            <label className="flex w-full flex-col gap-[10px] text-left lg:w-[527px]">
               <span className="use-clash text-[14px] leading-[20px] tracking-[-0.02em] text-[var(--color-text)]">
                 Temat rozmowy
               </span>
@@ -185,7 +185,7 @@ export default function ContactSection() {
           </div>
 
           {/* WIADOMOŚĆ */}
-          <label className="flex flex-col gap-[10px]">
+          <label className="flex flex-col gap-[10px] text-left">
             <span className="use-clash text-[14px] leading-[20px] tracking-[-0.02em] text-[var(--color-text)]">
               Wiadomość
             </span>
@@ -223,12 +223,12 @@ export default function ContactSection() {
               />
             </span>
 
-            <span className="body-xs font-sans max-w-[90%] tracking-[-0.02em] text-text-secondary"> 
-              Wyrażam zgodę na przetwarzanie moich danych osobowych w postaci imienia, nazwiska, adresu e-mail i nr tel. (jeżeli został podany), podanych w powyższym formularzu, zgodnie z przepisami rozporządzenia Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia 2016 r. w sprawie ochrony osób fizycznych w związku z przetwarzaniem danych osobowych i w sprawie swobodnego przepływu takich danych oraz uchylenia dyrektywy 95/46/WE (ogólne rozporządzenie o ochronie danych), Dz. Urz. UE z 4.5.2016 r. L 119, str. 1), w celu udzielenia odpowiedzi na złożone zapytanie. Żądanie usunięcia danych proszę kierować na adres <b>biuro@realestate.com</b>. 
-              {/* odstęp między akapitami */} 
-              <span className="block h-[12px]" aria-hidden="true" /> 
-              Informujemy, że: 1. Administratorem Pani/Pana danych osobowych jest RealEstate sp. z o.o. z siedzibą w Poznaniu przy ul. Długiej 5 lok. 25, 01-200 Poznań (KRS nr 0001000000) (dalej „Administrator”) e-mail: <b>biuro@realestate.com</b> 
-              </span>
+            <span className="body-xs font-sans tracking-[-0.02em] text-text-secondary">
+              Wyrażam zgodę na przetwarzanie moich danych osobowych w postaci imienia, nazwiska, adresu e-mail i nr tel. (jeżeli został podany), podanych w powyższym formularzu, zgodnie z przepisami rozporządzenia Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia 2016 r. w sprawie ochrony osób fizycznych w związku z przetwarzaniem danych osobowych i w sprawie swobodnego przepływu takich danych oraz uchylenia dyrektywy 95/46/WE (ogólne rozporządzenie o ochronie danych), Dz. Urz. UE z 4.5.2016 r. L 119, str. 1), w celu udzielenia odpowiedzi na złożone zapytanie. Żądanie usunięcia danych proszę kierować na adres <b>biuro@realestate.com</b>.
+              {/* odstęp między akapitami */}
+              <span className="block h-[12px]" aria-hidden="true" />
+              Informujemy, że: 1. Administratorem Pani/Pana danych osobowych jest RealEstate sp. z o.o. z siedzibą w Poznaniu przy ul. Długiej 5 lok. 25, 01-200 Poznań (KRS nr 0001000000) (dalej „Administrator”) e-mail: <b>biuro@realestate.com</b>
+            </span>
           </label>
 
           {/* CTA wysłania – metryki zgodne z tokenami przycisków */}
