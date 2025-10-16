@@ -15,36 +15,34 @@ const slides: Slide[] = [
   {
     city: 'Poznań, 20-300',
     title: 'POZNAŃ PARK',
-    desc: 'Kameralne osiedle położone w sąsiedztwie zieleni i miejskich udogodnień. Komfortowe domy jednorodzinne z przestronnymi tarasami.',
+    desc:
+      'Poznań Park to kameralne osiedle nowoczesnych domów, które harmonijnie łączy komfort życia z bliskością natury. Położone zaledwie 10 minut od centrum Poznania, oferuje ciszę i zieleń bez kompromisów – z łatwym dostępem do miejskich udogodnień.',
     image: '/house1.png',
   },
   {
-    city: 'Poznań, 20-300',
-    title: 'NOWE OGRODY',
-    desc: 'Zespół niskich budynków z prywatnymi ogródkami i strefą rekreacji. Idealne połączenie spokoju z miejską energią.',
-    image: '/house2.png',
+    city: 'Warszawa – Wilanów, 02-969',
+    title: 'SŁONECZNE TARASY',
+    desc:
+      'Rodzinne domy z ogródkami w cichej, zielonej okolicy. Szkoła i park w zasięgu 10 minut spacerem — idealne miejsce do życia z dziećmi.',
+    image: '/house5.jpg',
   },
   {
-    city: 'Poznań, 20-300',
-    title: 'ZIELONE TARASY',
-    desc: 'Nowoczesna architektura, panoramiczne przeszklenia i widok na park. Wysoki standard wykończenia w każdym detalu.',
-    image: '/house3.png',
+    city: 'Dąbrowa nad Wisłą, 27-130',
+    title: 'DOMY NAD WAŁEM',
+    desc:
+      'Bielone elewacje i dachówka w ciepłym odcieniu. Widok na dolinę rzeki, spokój i dostęp do tras rowerowych tuż za furtką.',
+    image: '/house6.jpg',
   },
   {
-    city: 'Poznań, 20-300',
-    title: 'OSIEDLE PRZY PARKU',
-    desc: 'Rodzinne osiedle inspirowane naturą. Bezpieczna przestrzeń z placem zabaw, strefą fitness i lokalnymi usługami.',
-    image: '/house4.png',
+    city: 'Suchy Las, 62-002',
+    title: 'NOWOCZESNE OGRODY',
+    desc:
+      'Współczesna bryła z dużymi przeszkleniami, garaż w bryle budynku i ogród od południa dla maksimum światła przez cały dzień.',
+    image: '/house7.jpg',
   },
 ];
 
-/** Okrągły przycisk nawigacji z ikoną strzałki.
- *  Stany:
- *   - default: biały bg, ciemna obwódka/ikona
- *   - hover: delikatny jasny bg
- *   - active: jeszcze jaśniejszy bg + jaśniejsza ikona/obwódka
- *   - disabled: szare obramowanie/ikona (brak hover/active, kursor not-allowed)
- */
+/** Okrągły przycisk nawigacji (‹ ›) ze stanami kolorów zgodnie z UI Kit */
 function ArrowCircle({
   direction,
   onClick,
@@ -59,15 +57,14 @@ function ArrowCircle({
   const base =
     'flex h-[53px] w-[53px] items-center justify-center rounded-full border transition-colors duration-150 focus:outline-none focus-visible:outline-none';
 
-  // hover: bardzo jasny niebieski, border i ikona ciemne
-  // active: delikatnie jaśniejszy, bez niebieskiego ringa
-  const able =
-    'border-[#11273D] text-[#11273D] bg-[var(--color-white)] ' +
-    'hover:bg-[#F3F8FE] active:bg-[#EAF2FB] ' +
-    'active:text-[#6D8093] active:border-[#B7C8D8]';
+  const able = [
+    'bg-[var(--color-white)] border-[var(--color-dark)] text-[var(--color-dark)]',
+    'hover:border-[var(--color-stroke-on-dark)] hover:text-[var(--color-stroke-on-dark)]',
+    'active:border-[var(--color-text-on-dark)] active:text-[var(--color-text-on-dark)]',
+  ].join(' ');
 
   const dis =
-    'cursor-not-allowed border-[#E6EEF6] text-[#E6EEF6] bg-[var(--color-white)]';
+    'cursor-default border-[var(--color-stroke-light)] text-[var(--color-stroke-light)] bg-[var(--color-white)]';
 
   return (
     <button
@@ -98,7 +95,6 @@ function ArrowCircle({
   );
 }
 
-
 export default function InvestmentSection() {
   const [index, setIndex] = useState(0);
   const current = slides[index];
@@ -114,28 +110,27 @@ export default function InvestmentSection() {
   };
 
   return (
-    <section className="w-full bg-[var(--color-white)]">
+    // ID + offset pod sticky header (82px)
+    <section id="inwestycje" className="w-full bg-[var(--color-white)] scroll-mt-[82px]">
       {/* nagłówek + lead */}
-      <div className="mx-auto w-full max-w-[1280px] px-[clamp(24px,6vw,40px)] pb-[80px] pt-0 text-center">
+      <div className="mx-container pb-[80px] pt-0 text-center">
         <div className="mx-auto flex max-w-[1280px] flex-col gap-[20px]">
-          <h2 className="font-display text-[42px] font-medium uppercase leading-[120%] text-[var(--color-dark)]">
-            NASZE INWESTYCJE
-          </h2>
+          <h2 className="h1 uppercase text-[var(--color-dark)]">NASZE INWESTYCJE</h2>
           <p className="body-l font-sans mx-auto max-w-[750px] text-text-secondary">
-            Nasze inwestycje to miejsca, które łączą nowoczesny design, funkcjonalność i trwałość. Każdy projekt realizowany przez RealEstate to wynik pasji, zaangażowania i dbałości o każdy szczegół.
+            Nasze inwestycje to miejsca, które łączą nowoczesny design, funkcjonalność i trwałość.
+            Każdy projekt realizowany przez RealEstate to wynik pasji, zaangażowania i dbałości o każdy szczegół.
           </p>
         </div>
       </div>
 
-      <div className="px-[clamp(24px,6vw,80px)] pb-[80px] lg:px-[80px]">
-        {/* zewnętrzna karta: radius 14px */}
-        <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-[24px] overflow-hidden rounded-[14px] border border-[var(--color-stroke)] bg-[var(--color-white)] lg:min-h-[540px] lg:flex-row lg:items-center lg:gap-[32px]">
-          {/* lewa kolumna: radius 12px */}
-          <div className="flex w-full flex-col gap-[10px] rounded-[12px] bg-[var(--color-white)] p-[24px] lg:h-[540px] lg:w-[515px] lg:p-[36px]">
+      {/* karta – spójny wrapper tylko mx-container */}
+      <div className="mx-container pb-[80px]">
+        <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-[24px] overflow-hidden rounded-[14px] border border-[var(--color-stroke)] bg-[var(--color-white)] lg:min-h-[540px] lg:flex-row lg:items-stretch lg:gap-[32px]">
+          {/* lewa kolumna */}
+          <div className="relative flex w-full flex-col rounded-[12px] bg-[var(--color-white)] p-[24px] lg:h-[540px] lg:w-[515px] lg:p-[36px]">
             <div className="flex flex-col gap-[10px]" aria-live="polite">
-              {/* Lokalizacja: 50×50, ring 7, ikona 12×19 */}
               <div className="flex items-center gap-[10px]">
-                <span className="relative inline-flex h-[50px] w-[50px] items-center justify-center rounded-full bg-[#BFD2E6] ring-[7px] ring-[#EEF6FF]">
+                <span className="inline-flex h-[50px] w-[50px] items-center justify-center rounded-full border-[7px] border-[var(--color-stroke-subtle)] bg-[var(--color-surface-medium)]">
                   <img
                     src="/icon-lokalizacja.svg"
                     alt=""
@@ -145,15 +140,12 @@ export default function InvestmentSection() {
                     aria-hidden="true"
                   />
                 </span>
-                <span className="font-display text-[15px] font-medium leading-[100%] text-[var(--color-dark)]">
-                  {current.city}
-                </span>
+                <span className="label-city text-[var(--color-dark)]">{current.city}</span>
               </div>
 
-              <h3 className="font-display text-[32px] font-medium uppercase leading-[140%] text-[var(--color-dark)]">
-                {current.title}
-              </h3>
-              <p className="body-l font-sans max-w-[443px] text-text-secondary">
+              <h3 className="h2 uppercase text-[var(--color-dark)] mt-[10px]">{current.title}</h3>
+
+              <p className="body-l font-sans max-w-[443px] text-text-secondary mt-[4px]">
                 {current.desc}
               </p>
 
@@ -167,23 +159,14 @@ export default function InvestmentSection() {
               </Button>
             </div>
 
-            <div className="flex items-center gap-[12px] pt-[60px]">
-              <ArrowCircle
-                direction="prev"
-                onClick={goPrev}
-                ariaLabel="Poprzedni slajd"
-                disabled={isFirst}
-              />
-              <ArrowCircle
-                direction="next"
-                onClick={goNext}
-                ariaLabel="Następny slajd"
-                disabled={isLast}
-              />
+            {/* Strzałki */}
+            <div className="mt-[60px] flex items-center gap-[12px] lg:mt-0 lg:absolute lg:left-[36px] lg:bottom-[37px]">
+              <ArrowCircle direction="prev" onClick={goPrev} ariaLabel="Poprzedni slajd" disabled={isFirst} />
+              <ArrowCircle direction="next" onClick={goNext} ariaLabel="Następny slajd" disabled={isLast} />
             </div>
           </div>
 
-          {/* obraz: radius 8px */}
+          {/* obraz */}
           <div className="relative w-full overflow-hidden rounded-[8px] lg:h-[540px] lg:w-[738px]">
             {slides.map((slide, slideIndex) => (
               <Image

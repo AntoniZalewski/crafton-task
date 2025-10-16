@@ -94,7 +94,7 @@ const MobileMenu = ({ open, onClose, links }: MobileMenuProps) => {
         aria-modal="true"
         className="fixed top-0 right-0 z-[60] flex h-screen w-[min(85vw,360px)] flex-col bg-[var(--color-white)] shadow-xl"
       >
-        <div className="flex h-[82px] items-center justify-between px-[clamp(24px,6vw,80px)]">
+        <div className="px-page flex h-[82px] items-center justify-between">
           <a href="#" className="inline-flex items-center" aria-label="Crafton">
             <img
               src="/crafton_logo.svg"
@@ -128,7 +128,7 @@ const MobileMenu = ({ open, onClose, links }: MobileMenuProps) => {
         </div>
 
         <nav aria-label="Glowne" className="flex-1 overflow-y-auto">
-          <ul className="divide-y divide-[var(--color-stroke-light)] px-[clamp(24px,6vw,80px)]">
+          <ul className="px-page divide-y divide-[var(--color-stroke-light)]">
             {links.map((link) => (
               <li key={link.label}>
                 {/* Typography audit: sync mobile nav item to body-Medium-L 16px/150% Instrument Sans. */}

@@ -13,25 +13,35 @@ type ButtonProps = React.ComponentPropsWithoutRef<"button"> & {
   showIcon?: boolean;
 };
 
+//
+// Fundament typograficzny 1:1 z Figmy:
+// Clash Display / Medium(500) / 15px / line-height: 100% / letter-spacing: 0 / uppercase
+//
 const baseClasses =
-  "inline-flex items-center justify-center gap-[10px] rounded-[9999px] font-display text-[15px] font-medium uppercase leading-[100%] tracking-[-0.02em] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-white)]";
+  "inline-flex items-center justify-center gap-[10px] rounded-[9999px] " +
+  "font-display text-[15px] leading-[1] uppercase " + // bez trackingu tutaj
+  "transition-colors duration-150 " +
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-white)]";
 
-/** Primary pozostaje jak było; Secondary dopracowane pod makietę */
 const variantClasses: Record<NonNullable<ButtonProps["variant"]>, string> = {
-  primary: `${baseClasses} btn btn-primary h-[var(--btn-h)] px-[32px] py-[18px] text-[var(--btn-text-color)]`,
+  primary: [
+    baseClasses,
+    "btn btn-primary",
+    "h-[var(--btn-h)] px-[32px] py-[18px]",
+  ].join(" "),
 
-  // Secondary — jasny przycisk z obrysem (Default/ Hover/ Active/ Disabled)
+  // SECONDARY — tylko kolor tekstu zmienia się w :hover i :active
   secondary: [
     baseClasses,
     "h-[var(--btn-h)] px-[32px] py-[18px]",
     // default
     "border border-[var(--color-stroke)] bg-[var(--color-surface-light)] text-[var(--color-dark)]",
-    // hover (bardzo subtelny fill, „zgaszony” tekst)
-    "hover:bg-[rgba(49,111,175,0.06)] hover:text-[rgba(17,39,61,0.18)]",
-    // active / clicked (niebieskawy fill, lekko niebieski tekst i obrys)
-    "active:bg-[rgba(49,111,175,0.16)] active:text-[rgba(49,111,175,0.75)] active:border-[rgba(49,111,175,0.35)]",
+    // hover -> tylko tekst
+    "hover:text-[var(--color-text-on-dark)]",
+    // active/clicked -> tylko tekst
+    "active:text-[var(--color-surface-medium)]",
     // disabled
-    "disabled:opacity-55 disabled:cursor-not-allowed",
+    "disabled:opacity-60 disabled:cursor-not-allowed",
   ].join(" "),
 };
 
@@ -46,7 +56,7 @@ const Button = ({
 }: ButtonProps) => {
   const classes = [variantClasses[variant], className].filter(Boolean).join(" ");
 
-  // 20x20 box + strzałka 13.2x13.2 w środku (tylko dla primary)
+  // 20x20 box + strzałka 13.2x13.2 (tylko dla primary)
   const Arrow = (
     <span
       className="inline-flex items-center justify-center"
@@ -70,8 +80,10 @@ const Button = ({
     </span>
   );
 
+  // Klucz: wymuszenie dokładnych metryk na TEKŚCIE,
+  // żeby nigdzie po drodze nie podbiło wagi ani kerningu.
   const Inner = (
-    <span className="inline-flex items-center gap-[10px]">
+    <span className="inline-flex items-center gap-[10px] font-display font-medium tracking-[0] leading-[1]">
       {children}
       {variant === "primary" && showIcon ? Arrow : null}
     </span>

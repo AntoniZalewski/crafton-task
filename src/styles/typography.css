@@ -1,15 +1,18 @@
+/* === Headings (Clash Display / Medium) === */
 .h1-hero {
   font-family: var(--font-clash);
   font-weight: 500;
   font-size: 75px;
-  line-height: 120%;
+  line-height: 120%;               /* 120.0000047…% */
+  letter-spacing: 0;
 }
 
 .h1 {
   font-family: var(--font-clash);
   font-weight: 500;
   font-size: 42px;
-  line-height: 140%;
+  line-height: 140%;               /* 139.9999976…% */
+  letter-spacing: 0;
 }
 
 .h2-hero {
@@ -17,6 +20,7 @@
   font-weight: 500;
   font-size: 56px;
   line-height: 140%;
+  letter-spacing: 0;
 }
 
 .h2 {
@@ -24,6 +28,7 @@
   font-weight: 500;
   font-size: 32px;
   line-height: 140%;
+  letter-spacing: 0;
 }
 
 .h3 {
@@ -31,6 +36,7 @@
   font-weight: 500;
   font-size: 24px;
   line-height: 140%;
+  letter-spacing: 0;
 }
 
 .h4 {
@@ -38,6 +44,7 @@
   font-weight: 500;
   font-size: 18px;
   line-height: 160%;
+  letter-spacing: 0;
 }
 
 .h5 {
@@ -45,6 +52,7 @@
   font-weight: 500;
   font-size: 16px;
   line-height: 100%;
+  letter-spacing: 0;
 }
 
 .h6 {
@@ -52,13 +60,16 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 140%;
+  letter-spacing: 0;
 }
 
+/* === Body (Instrument Sans) === */
 .body-xl {
   font-family: var(--font-instrument);
   font-weight: 400;
   font-size: 18px;
   line-height: 160%;
+  letter-spacing: 0;
 }
 
 .body-l {
@@ -66,6 +77,7 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 160%;
+  letter-spacing: 0;
 }
 
 .body-m {
@@ -73,6 +85,7 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 160%;
+  letter-spacing: 0;
 }
 
 .body-s {
@@ -80,6 +93,7 @@
   font-weight: 400;
   font-size: 10px;
   line-height: 150%;
+  letter-spacing: 0;
 }
 
 .body-xs {
@@ -87,13 +101,16 @@
   font-weight: 400;
   font-size: 8px;
   line-height: 180%;
+  letter-spacing: -0.02em; /* -2% */
 }
 
+/* === Body Medium / Semibold === */
 .body-medium-l {
   font-family: var(--font-instrument);
   font-weight: 500;
   font-size: 16px;
   line-height: 150%;
+  letter-spacing: 0;
 }
 
 .body-semibold-m {
@@ -101,4 +118,14 @@
   font-weight: 600;
   font-size: 14px;
   line-height: 150%;
+  letter-spacing: 0;
+}
+
+/* === Dodatkowe — label miasta przy badge lokalizacji === */
+.label-city {
+  font-family: var(--font-clash);
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 100%;
+  letter-spacing: 0;
 }

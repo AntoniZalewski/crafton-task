@@ -1,9 +1,6 @@
 'use client';
 
-import type {
-  CSSProperties,
-  InputHTMLAttributes,
-} from 'react';
+import type { CSSProperties, InputHTMLAttributes } from 'react';
 
 const clsx = (...classes: Array<string | false | null | undefined>) =>
   classes.filter(Boolean).join(' ');
@@ -12,12 +9,8 @@ const toCssValue = (value?: string) => {
   if (!value) return undefined;
   const trimmed = value.trim();
   if (trimmed === '0') return '0';
-  if (/[a-z%)]$/i.test(trimmed) || trimmed.includes('calc(')) {
-    return trimmed;
-  }
-  if (/^\d+(\.\d+)?$/.test(trimmed)) {
-    return `${trimmed}px`;
-  }
+  if (/[a-z%)]$/i.test(trimmed) || trimmed.includes('calc(')) return trimmed;
+  if (/^\d+(\.\d+)?$/.test(trimmed)) return `${trimmed}px`;
   return trimmed;
 };
 
@@ -43,7 +36,6 @@ const variantClasses: Record<EditTextVariant, string> = {
     'border-emerald-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200',
 };
 
-// Typography audit: map input sizes to Instrument Sans body scale.
 const sizeClasses: Record<EditTextSize, string> = {
   small: 'font-sans body-m px-3 py-2 rounded-md',
   medium: 'font-sans body-l px-4 py-3 rounded-lg',
@@ -51,9 +43,13 @@ const sizeClasses: Record<EditTextSize, string> = {
 };
 
 export interface EditTextProps
-  extends InputHTMLAttributes<HTMLInputElement> {
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
+  /** wariant obramowania / focus */
   variant?: EditTextVariant;
+  /** rozmiar typograficzny komponentu (nie mylić z html-owym `size`) */
   size?: EditTextSize;
+
+  /* inline style props z exportów z Figma (opcjonalne) */
   text_font_size?: string;
   text_font_family?: string;
   text_font_weight?: string;
@@ -87,6 +83,10 @@ const EditText = ({
   style,
   ...props
 }: EditTextProps) => {
+  // --- Controlled/uncontrolled guard ---
+  const isControlled = Object.prototype.hasOwnProperty.call(props, 'value');
+  const { value, defaultValue, onChange, ...rest } = props;
+
   const inlineStyle: CSSProperties = {
     ...style,
     width: layout_width,
@@ -112,13 +112,13 @@ const EditText = ({
         className
       )}
       style={inlineStyle}
-      {...props}
+      {...(isControlled
+        ? { value: (value as string | number | readonly string[] | undefined) ?? '' }
+        : { defaultValue })}
+      onChange={onChange}
+      {...rest}
     />
   );
 };
 
 export default EditText;
-// Typography audit: input text adopts Instrument Sans with body-scale sizing (14/16/18px at 150-160% line-height).
-
-
-

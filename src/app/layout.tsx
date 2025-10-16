@@ -17,9 +17,7 @@ export const metadata = {
   icons: { icon: "/favicon.ico" },
 } as const;
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pl" className={`${clashDisplay.variable} ${instrumentSans.variable}`}>
       <head>
@@ -32,4 +30,3 @@ export default function RootLayout({
     </html>
   );
 }
-

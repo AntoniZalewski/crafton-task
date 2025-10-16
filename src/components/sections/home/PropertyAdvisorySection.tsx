@@ -1,30 +1,38 @@
+// components/sections/PropertyAdvisorySection.tsx
+'use client';
+
 import Image from 'next/image';
 import Button from '../../ui/Button';
 
 const advisoryArticles = [
   {
     id: 1,
-    title: 'Jak kupic nieruchomosc i nie zwariowac? Przewodnik dla poczatkujacych.',
+    title:
+      'Jak kupić nieruchomość i nie zwariować? Przewodnik dla początkujących.',
     image: '/house2.png',
   },
   {
     id: 2,
-    title: 'Czym rozni sie inwestycja w nieruchomosc od zwyklego zakupu?',
+    title:
+      'Czym różni się inwestycja w nieruchomość od zwykłego zakupu?',
     image: '/house3.png',
   },
   {
     id: 3,
-    title: '5 technologii, ktore powinny miec nowoczesne domy w 2025 roku.',
+    title:
+      '5 technologii, które powinny mieć nowoczesne domy w 2025 roku.',
     image: '/house4.png',
   },
 ];
 
-const PropertyAdvisorySection = () => {
+export default function PropertyAdvisorySection() {
   return (
     <section className="w-full bg-[var(--color-white)]">
-      <div className="mx-auto w-full max-w-[1280px] px-[clamp(24px,6vw,80px)] py-[80px]">
-        <h2 className="font-display text-[42px] font-medium uppercase leading-[120%] text-[var(--color-dark)]">
-          PORADNIK PO NIERUCHOMOSCIACH
+      <div className="mx-container py-section">
+        {/* Nagłówek sekcji — Clash Display Medium 42/120, uppercase */}
+        <h2 className="h1 uppercase text-[var(--color-dark)]">
+          <span className="block">PORADNIK</span>
+          <span className="block">PO NIERUCHOMOŚCIACH</span>
         </h2>
 
         <div className="mt-[32px] grid grid-cols-1 justify-items-center gap-[32px] lg:grid-cols-3">
@@ -33,21 +41,29 @@ const PropertyAdvisorySection = () => {
               key={article.id}
               className="flex h-[505px] w-full max-w-[405px] flex-col gap-[20px] rounded-card border border-[var(--color-stroke)] bg-[var(--color-white)] p-[24px] shadow-[0_16px_28px_rgba(17,_39,_61,_0.06)]"
             >
-              <div className="overflow-hidden rounded-[8px]">
+              {/* Obraz w proporcji 357×222, bez warningów Next.js */}
+              <div className="relative overflow-hidden rounded-[8px] aspect-[357/222]">
                 <Image
                   src={article.image}
                   alt={article.title}
-                  width={357}
-                  height={222}
-                  className="h-[222px] w-full object-cover"
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 1024px) 357px, 100vw"
+                  priority={false}
                 />
               </div>
-              <h3 className="font-display text-[18px] font-medium uppercase leading-[160%] text-[var(--color-dark)]">
+
+              {/* Tytuł kafelka — Clash Display Medium 18/160, uppercase */}
+              <h3 className="h4 uppercase text-[var(--color-dark)]">
                 {article.title}
               </h3>
-              <p className="body-l font-sans text-text-secondary">
-                Dowiedz sie, jakie kroki podjac przed zakupem i jak ocenic potencjal inwestycyjny nieruchomosci, aby podejmowac swiadome decyzje.
+
+              {/* Tekst pomocniczy (Instrument Sans / body-l) */}
+              <p className="body-l text-text-secondary">
+                Dowiedz się, jakie kroki podjąć przed zakupem i jak ocenić
+                potencjał inwestycyjny nieruchomości, aby podejmować świadome decyzje.
               </p>
+
               <div className="mt-auto">
                 <Button
                   as="link"
@@ -55,7 +71,7 @@ const PropertyAdvisorySection = () => {
                   variant="secondary"
                   className="h-[56px] w-full justify-center gap-[10px] rounded-pill px-[32px] py-[18px] bg-[#FEFEFE]"
                 >
-                  PRZEJDZ DO ARTYKULU
+                  PRZEJDŹ DO ARTYKUŁU
                 </Button>
               </div>
             </article>
@@ -63,21 +79,18 @@ const PropertyAdvisorySection = () => {
         </div>
       </div>
 
-      <div className="px-[clamp(24px,6vw,80px)] pb-[80px] pt-0 lg:px-[80px]">
-        <div className="mx-auto flex w-full max-w-[1280px] justify-center">
+      <div className="mx-container pb-[80px] pt-0">
+        <div className="flex w-full justify-center">
           <Button
             as="link"
             href="#"
             variant="primary"
             className="h-[56px] w-[260px] justify-center gap-[10px] rounded-pill px-[32px] py-[18px]"
           >
-            WIECEJ PORADNIKOW
+            WIĘCEJ PORADNIKÓW
           </Button>
         </div>
       </div>
     </section>
   );
-};
-
-export default PropertyAdvisorySection;
-
+}

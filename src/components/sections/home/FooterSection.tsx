@@ -1,7 +1,8 @@
 const FooterSection = () => {
   return (
-    <footer className="w-full bg-[var(--color-white)] px-[clamp(24px,6vw,80px)] pb-[40px] pt-[20px] lg:px-[80px]">
-      <div className="mx-auto flex w-full max-w-[1280px] flex-col items-center gap-[16px] text-center">
+    // UWAGA: usunięte px-page (powodowało podwójny padding z mx-container)
+    <footer className="w-full bg-[var(--color-white)] pb-[40px] pt-[20px]">
+      <div className="mx-container flex w-full flex-col items-center gap-[16px] text-center">
         <p className="body-m font-sans max-w-[750px] text-text-secondary">
           Copyright 2025 RealEstate Sp. z o.o. Wszelkie prawa zastrzezone.
         </p>
