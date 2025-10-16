@@ -1,215 +1,268 @@
-/* === Tailwind === */
+/* === Tailwind (musi być na górze) === */
 @import "tailwindcss";
 
-/* === LOKALNE FONTY (wstrzykiwane przez next/font/local w app/fonts.*) === */
+/* === Tokeny projektu (kolory, spacing, typografia) ===
+   Uwaga: fonty Clash/Instrument są wstrzykiwane przez next/font i
+   wystawiane jako zmienne CSS (--font-clash, --font-instrument). */
 :root{
+  /* Font families (fallbacki zostawione „sane”) */
   --font-display: var(--font-clash), system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-sans: var(--font-instrument), system-ui, -apple-system, "Segoe UI", sans-serif;
-}
+  --font-sans:    var(--font-instrument), system-ui, -apple-system, "Segoe UI", sans-serif;
 
-/* Layout / spacing tokens */
-:root{
+  /* Layout / spacing */
   --container-w: 1280px;
   --page-pad-x: 80px;
   --section-pad-y: 80px;
   --nav-h: 82px;
   --nav-gap: 28px;
 
+  /* Przycisk – metryki */
   --btn-h: 56px;
   --btn-padding-x: 32px;
   --btn-padding-y: 18px;
 
-  /* radii */
+  /* Promienie */
   --btn-radius-pill: 9999px;
   --card-radius: 12px;
   --panel-radius: 14px;
   --input-radius: 8px;
 
-  /* === Brand & text === */
-  --color-primary: #316FAF;                 /* PRIMARY */
-  --color-primary-hovered: #215183;         /* PRIMARY HOVERED */
-  --color-primary-clicked: #16395C;         /* PRIMARY CLICKED */
+  /* Paleta – brand & tekst */
+  --color-primary: #316FAF;
+  --color-primary-hovered: #215183;
+  --color-primary-clicked: #16395C;
 
-  --color-dark: #11273D;                    /* HEADINGS / DARK */
-  --color-text: #4D4D4D;                    /* TEXT */
-  --color-text-on-dark: #E3E3E3;            /* TEXT / ON DARK */
-  --color-white: #FFFFFF;                   /* BACKGROUND / DEFAULT, HEADINGS / LIGHT */
+  --color-dark: #11273D;          /* nagłówki / ciemny tekst */
+  --color-text: #4D4D4D;          /* tekst bazowy */
+  --color-text-on-dark: #E3E3E3;
+  --color-white: #FFFFFF;
 
-  /* === Surfaces === */
-  --color-surface-subtle: #ECF4FA;          /* BACKGROUND / SUBTLE */
-  --color-surface-alt: #F6FBFF;             /* BACKGROUND / ALT */
-  --color-surface-inner-dark: #3C536A;      /* BACKGROUND / SECTION */
-  --color-surface-light: #FEFEFE;           /* BACKGROUND / LIGHT SURFACE */
-  --color-surface-medium: #BFD2E6;          /* BACKGROUND / MEDIUM SURFACE */
+  /* Powierzchnie */
+  --color-surface-subtle: #ECF4FA;
+  --color-surface-alt:    #F6FBFF;
+  --color-surface-inner-dark: #3C536A;
+  --color-surface-light:  #FEFEFE;
+  --color-surface-medium: #BFD2E6;
 
-  /* === Strokes === */
-  --color-stroke: #D3E0EB;                  /* STROKE / BASE */
-  --color-stroke-light: #EBF3FA;            /* STROKE / LIGHT */
-  --color-stroke-subtle: #EEF6FF;           /* STROKE / SUBTLE */
-  --color-stroke-on-dark: #5D6F80;          /* STROKE / ON DARK */
-  --color-icon-stroke-on-dark: #283C50;     /* STROKE / ICON ON DARK */
+  /* Obramowania */
+  --color-stroke: #D3E0EB;
+  --color-stroke-light: #EBF3FA;
+  --color-stroke-subtle: #EEF6FF;
+  --color-stroke-on-dark: #5D6F80;
+  --color-icon-stroke-on-dark: #283C50;
 
-  /* === Gradient === */
+  /* Akcent „soft” – wcześniej używany, ale niezdefiniowany */
+  --color-accent-soft: #EEF6FF;
+
+  /* --- Error palette (zrzut: Schemes/* + State Layers/Error/Opacity-10) --- */
+  --color-error: #8E1C16;                 /* Schemes/Error – obrys/focus */
+  --color-on-error-container: #8E1C16;    /* Schemes/On Error Container – tekst/placeholder */
+  --state-error-10: #FCEEEE;              /* State Layers/Error/Opacity-10 – tło błędu */
+
+
+  /* Gradienty */
   --gradient-section-soft-fade: linear-gradient(180deg, #FFFFFF 0%, #ECF4FA 100%);
 
-  /* === Back-compat aliases === */
-  --color-primary-hover: var(--color-primary-hovered);
+  /* Alias wstecznej zgodności */
+  --color-primary-hover:   var(--color-primary-hovered);
   --color-primary-pressed: var(--color-primary-clicked);
 }
 
-/* Base */
-html,body{
+/* === Ustawienia bazowe (czytelna podstawa typografii i tła) === */
+html, body{
   margin:0;
   min-height:100vh;
   background:var(--color-white);
   color:var(--color-text);
   font-family:var(--font-sans);
-  -webkit-font-smoothing:antialiased;
-  font-synthesis-weight:none;
-  font-synthesis-style:none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-synthesis-weight: none;
+  font-synthesis-style: none;
 }
 
-h1,h2,h3,h4,h5,h6,.heading,.nav-link--text,.btn--secondary{ color:var(--color-dark); }
-
-/* === NAV LINK – Clash 500 / 15px / 100% / 0% (Figma) === */
-.nav-link{
-  font-family: var(--font-clash);
-  font-weight: 500;
-  font-size: 15px;
-  line-height: 1;       /* 100% */
-  letter-spacing: 0;
-  text-transform: uppercase;
+/* Nagłówki i kilka klas, które świadomie wymuszają „ciemny” kolor */
+h1, h2, h3, h4, h5, h6,
+.heading,
+.nav-link--text,
+.btn--secondary{
+  color: var(--color-dark);
 }
 
-/* section helpers */
-.section--alt{ background:var(--color-surface-alt); }
-.section--subtle{ background:var(--color-surface-subtle); }
-
-/* cards / panels */
-.card,.panel,.box{
-  background:var(--color-surface-light);
-  border:1px solid var(--color-stroke);
-}
-
-/* inputs */
-.input,input,textarea,select{
-  background:var(--color-white);
-  color:var(--color-text);
-  border:1px solid var(--color-stroke);
-}
-
-.divider,.hr{ border-color:var(--color-stroke-light); }
-
-/* ==== UTILS radius ==== */
-.rounded-pill{ border-radius:var(--btn-radius-pill); }
-.rounded-panel{ border-radius:var(--panel-radius); }
-.rounded-card{ border-radius:var(--card-radius); }
-
-/* === Wspólny fundament CTA (rozmiar, krój) === */
-.btn{
-  display:inline-flex; align-items:center; justify-content:center;
-  gap:12px;
-  height:var(--btn-h);
-  padding:var(--btn-padding-y) var(--btn-padding-x);
-  border-radius:var(--btn-radius-pill);
-  text-decoration:none; white-space:nowrap; cursor:pointer;
-  transition:background-color 160ms ease, color 160ms ease, border-color 160ms ease, opacity 120ms ease;
-  font-family:var(--font-display);
-  font-size:15px;
-  line-height:100%;
-  font-weight:500;
-  text-transform:uppercase;
-  letter-spacing:0; /* Figma */
-}
-
-/* === Niebieski (brand solid) === */
-.btn-primary{ background:var(--color-primary); color:#fff; border:0; }
-.btn-primary:hover,.btn-primary:focus-visible{ background:var(--color-primary-hover); }
-.btn-primary:active{ background:var(--color-primary-pressed); }
-.btn-primary:disabled{ opacity:.55; cursor:not-allowed; }
-
-/* === Outline jasny === */
-.btn-outlineLight{
-  background:var(--color-surface-light);
-  color:var(--color-dark);
-  border:1px solid var(--color-stroke);
-}
-.btn-outlineLight:hover{ background:var(--color-surface-subtle); color:rgba(17,39,61,.28); }
-.btn-outlineLight:active{ background:var(--color-accent-soft); color:var(--color-primary); border-color:var(--color-stroke-light); }
-.btn-outlineLight:disabled{ opacity:.6; cursor:not-allowed; }
-
-/* === Kapsułka tagowa === */
-.btn-tagPill{
-  background:var(--color-surface-light);
-  color:var(--color-text);
-  border:1px solid var(--color-stroke);
-}
-.btn-tagPill:hover{ background:var(--color-surface-subtle); color:rgba(17,39,61,.28); }
-.btn-tagPill:active{ background:var(--color-accent-soft); color:var(--color-primary); border-color:var(--color-stroke-light); }
-.btn-tagPill[aria-pressed="true"]{
-  background:var(--color-accent-soft);
-  color:var(--color-primary);
-  border-color:var(--color-stroke-light);
-}
-
-/* === Okrągła ikona (strzałka) === */
-.btn-iconCircle{
-  width:53px; height:53px; padding:0;
-  border-radius:9999px;
-  background:var(--color-white);
-  border:1px solid var(--color-dark);
-  color:var(--color-dark);
-}
-.btn-iconCircle:hover{ border-color:#3E5870; color:#3E5870; }
-.btn-iconCircle:active{ border-color:var(--color-stroke-light); color:var(--color-stroke-light); opacity:.9; }
-.btn-iconCircle:disabled{ border-color:var(--color-stroke-light); color:var(--color-stroke-light); opacity:.75; cursor:not-allowed; }
-
-/* Ikony wewnątrz przycisków */
-.btn__icon,img.btn__icon,svg.btn__icon{
-  display:inline-block; flex-shrink:0; object-fit:contain; vertical-align:middle;
-}
-
-/* Wyłączenie starych pseudo-ikon */
-.btn .btn-arrow,.btn.btn-primary .btn-arrow,.btn::after,.btn-primary::after{ content:none !important; display:none !important; }
-.nav--main a::before,.nav--main a::after{ content:none !important; }
-
-/* Typografia – z plików pdf */
+/* Typografia globalna z pdf (utrzymujemy jako osobny plik) */
 @import "../styles/typography.css";
 
-/* „odchudzenie” renderu + twarde metryki */
-.btn{ -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
-.btn, .btn *{ font-family: var(--font-display); font-weight: 500; letter-spacing: 0; line-height: 1; }
+/* === Komponenty (w @layer components – lepszy purge i priorytet) === */
+@layer components {
 
-/* === Contact section: twarde wymuszenie Clash tylko wewnątrz #kontakt === */
-#kontakt .use-clash {
+  /* Link w nawigacji – Clash 500 / 15px / 100% */
+  .nav-link{
+    font-family: var(--font-clash);
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 1;      /* 100% */
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  /* Karty / panele – jednolita baza */
+  .card, .panel, .box{
+    background: var(--color-surface-light);
+    border: 1px solid var(--color-stroke);
+    border-radius: var(--card-radius);
+  }
+
+  /* Pola wejściowe – neutralne tło i obrys */
+  .input, input, textarea, select{
+    background: var(--color-white);
+    color: var(--color-text);
+    border: 1px solid var(--color-stroke);
+    border-radius: var(--input-radius);
+  }
+
+  .divider, .hr{ border-color: var(--color-stroke-light); }
+
+  /* Przyciski – wspólny fundament (metryki, krój, animacje) */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    gap:12px;
+    height:var(--btn-h);
+    padding:var(--btn-padding-y) var(--btn-padding-x);
+    border-radius:var(--btn-radius-pill);
+    text-decoration:none; white-space:nowrap; cursor:pointer;
+    transition:
+      background-color 160ms ease,
+      color 160ms ease,
+      border-color 160ms ease,
+      opacity 120ms ease;
+    font-family:var(--font-display);
+    font-size:15px;
+    line-height:1;
+    font-weight:500;
+    text-transform:uppercase;
+    letter-spacing:0;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Brand solid (niebieski) */
+  .btn-primary{
+    background:var(--color-primary);
+    color:#fff;
+    border:0;
+  }
+  .btn-primary:hover,
+  .btn-primary:focus-visible{ background:var(--color-primary-hover); }
+  .btn-primary:active{ background:var(--color-primary-pressed); }
+  .btn-primary:disabled{ opacity:.55; cursor:not-allowed; }
+
+  /* Outline jasny – subtelna interakcja na jasnym tle */
+  .btn-outlineLight{
+    background:var(--color-surface-light);
+    color:var(--color-dark);
+    border:1px solid var(--color-stroke);
+  }
+  .btn-outlineLight:hover{
+    background:var(--color-surface-subtle);
+    color:rgba(17,39,61,.28); /* lekko przygaszony ciemny */
+  }
+  .btn-outlineLight:active{
+    background:var(--color-accent-soft);
+    color:var(--color-primary);
+    border-color:var(--color-stroke-light);
+  }
+  .btn-outlineLight:disabled{ opacity:.6; cursor:not-allowed; }
+
+  /* Kapsułka/tag (toggle’owalna) */
+  .btn-tagPill{
+    background:var(--color-surface-light);
+    color:var(--color-text);
+    border:1px solid var(--color-stroke);
+  }
+  .btn-tagPill:hover{
+    background:var(--color-surface-subtle);
+    color:rgba(17,39,61,.28);
+  }
+  .btn-tagPill:active{
+    background:var(--color-accent-soft);
+    color:var(--color-primary);
+    border-color:var(--color-stroke-light);
+  }
+  .btn-tagPill[aria-pressed="true"]{
+    background:var(--color-accent-soft);
+    color:var(--color-primary);
+    border-color:var(--color-stroke-light);
+  }
+
+  /* Okrągły przycisk-ikona (np. strzałka w kółku) */
+  .btn-iconCircle{
+    width:53px; height:53px; padding:0;
+    border-radius:9999px;
+    background:var(--color-white);
+    border:1px solid var(--color-dark);
+    color:var(--color-dark);
+  }
+  .btn-iconCircle:hover{ border-color:#3E5870; color:#3E5870; }
+  .btn-iconCircle:active{ border-color:var(--color-stroke-light); color:var(--color-stroke-light); opacity:.9; }
+  .btn-iconCircle:disabled{ border-color:var(--color-stroke-light); color:var(--color-stroke-light); opacity:.75; cursor:not-allowed; }
+
+  /* Ikona wewnątrz przycisku – nie rozciąga układu */
+  .btn__icon,
+  img.btn__icon,
+  svg.btn__icon{
+    display:inline-block;
+    flex-shrink:0;
+    object-fit:contain;
+    vertical-align:middle;
+  }
+
+  /* Wyłączamy stare pseudo-ikonki aby nie dublować strzałek */
+  .btn .btn-arrow,
+  .btn.btn-primary .btn-arrow,
+  .btn::after,
+  .btn-primary::after{ content:none !important; display:none !important; }
+  .nav--main a::before,
+  .nav--main a::after{ content:none !important; }
+}
+
+/* === Sekcje tła – proste helpery „surface” === */
+.section--alt{    background:var(--color-surface-alt); }
+.section--subtle{ background:var(--color-surface-subtle); }
+
+/* === Promienie jako utilsy (nie kolidują z klasami Tailwinda) === */
+.rounded-pill{  border-radius:var(--btn-radius-pill); }
+.rounded-panel{ border-radius:var(--panel-radius); }
+.rounded-card{  border-radius:var(--card-radius); }
+
+/* === Specjalny wyjątek: sekcja #kontakt wymusza Clash ===
+   Używaj oszczędnie – tylko, gdy musimy „złamać” krój w danym bloku. */
+#kontakt .use-clash{
   font-family: var(--font-clash) !important;
-  font-weight: 500 !important;       /* Medium */
+  font-weight: 500 !important;  /* Medium */
   letter-spacing: 0 !important;
   line-height: 1 !important;
   text-transform: uppercase;
 }
 
-/* === Site-wide container utilities for consistent side paddings === */
-@layer utilities {
-  /* poziome paddingi 24->80px, bez tykania Y */
-  .px-page {
-    padding-left: clamp(24px, 5.56vw, var(--page-pad-x));
+/* === Utilsy „kontenerowe” – spójne paddingi X i sekcje Y === */
+@layer utilities{
+  /* Poziome paddingi 24→80px, bez tykania osi Y */
+  .px-page{
+    padding-left:  clamp(24px, 5.56vw, var(--page-pad-x));
     padding-right: clamp(24px, 5.56vw, var(--page-pad-x));
   }
 
-  /* scentralizowany kontener o max-w + te same px co wyżej */
-  .mx-container {
-    margin-left: auto;
-    margin-right: auto;
+  /* Maks. szerokość + te same boczne paddingi */
+  .mx-container{
+    margin-left:auto; margin-right:auto;
     max-width: var(--container-w);
-    padding-left: clamp(24px, 5.56vw, var(--page-pad-x));
+    padding-left:  clamp(24px, 5.56vw, var(--page-pad-x));
     padding-right: clamp(24px, 5.56vw, var(--page-pad-x));
   }
 
-  /* standardowa pionowa sekcja 80px (na desktopie), nie zmienia X */
-  .py-section {
+  /* Standardowa pionowa sekcja (desktop: 80px) */
+  .py-section{
     padding-top: var(--section-pad-y);
     padding-bottom: var(--section-pad-y);
   }
 }
-

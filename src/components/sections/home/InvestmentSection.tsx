@@ -1,9 +1,11 @@
+// src/components/sections/home/InvestmentSection.tsx
 'use client';
 
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import Button from '../../ui/Button';
 
+/** Typ pojedynczego slajdu (miasto, tytuł, opis, obraz). */
 type Slide = {
   city: string;
   title: string;
@@ -11,6 +13,7 @@ type Slide = {
   image: string;
 };
 
+/** Dane demo – zgodne z layoutem Figma. */
 const slides: Slide[] = [
   {
     city: 'Poznań, 20-300',
@@ -42,7 +45,10 @@ const slides: Slide[] = [
   },
 ];
 
-/** Okrągły przycisk nawigacji (‹ ›) ze stanami kolorów zgodnie z UI Kit */
+/**
+ * Okrągły przycisk nawigacji (‹ ›)
+ * - zgodny z UI Kit (kolory, border, hover/active/disabled)
+ */
 function ArrowCircle({
   direction,
   onClick,
@@ -57,13 +63,12 @@ function ArrowCircle({
   const base =
     'flex h-[53px] w-[53px] items-center justify-center rounded-full border transition-colors duration-150 focus:outline-none focus-visible:outline-none';
 
-  const able = [
-    'bg-[var(--color-white)] border-[var(--color-dark)] text-[var(--color-dark)]',
-    'hover:border-[var(--color-stroke-on-dark)] hover:text-[var(--color-stroke-on-dark)]',
-    'active:border-[var(--color-text-on-dark)] active:text-[var(--color-text-on-dark)]',
-  ].join(' ');
+  const enabled =
+    'bg-[var(--color-white)] border-[var(--color-dark)] text-[var(--color-dark)] ' +
+    'hover:border-[var(--color-stroke-on-dark)] hover:text-[var(--color-stroke-on-dark)] ' +
+    'active:border-[var(--color-text-on-dark)] active:text-[var(--color-text-on-dark)]';
 
-  const dis =
+  const disabledStyle =
     'cursor-default border-[var(--color-stroke-light)] text-[var(--color-stroke-light)] bg-[var(--color-white)]';
 
   return (
@@ -73,7 +78,7 @@ function ArrowCircle({
       aria-disabled={disabled}
       disabled={disabled}
       onClick={disabled ? undefined : onClick}
-      className={`${base} ${disabled ? dis : able}`}
+      className={`${base} ${disabled ? disabledStyle : enabled}`}
     >
       <svg
         width={12}
@@ -95,6 +100,12 @@ function ArrowCircle({
   );
 }
 
+/**
+ * Sekcja „Nasze inwestycje”:
+ * - slider 4 slajdów z opisem i zdjęciem
+ * - przyciski nawigacji: ‹ › (ArrowCircle)
+ * - layout: lewa kolumna opis, prawa kolumna zdjęcie (flex-row ≥ lg)
+ */
 export default function InvestmentSection() {
   const [index, setIndex] = useState(0);
   const current = slides[index];
@@ -102,33 +113,35 @@ export default function InvestmentSection() {
   const isFirst = useMemo(() => index === 0, [index]);
   const isLast = useMemo(() => index === slides.length - 1, [index]);
 
-  const goPrev = () => {
-    if (!isFirst) setIndex((i) => i - 1);
-  };
-  const goNext = () => {
-    if (!isLast) setIndex((i) => i + 1);
-  };
+  const goPrev = () => !isFirst && setIndex((i) => i - 1);
+  const goNext = () => !isLast && setIndex((i) => i + 1);
 
   return (
-    // ID + offset pod sticky header (82px)
-    <section id="inwestycje" className="w-full bg-[var(--color-white)] scroll-mt-[82px]">
-      {/* nagłówek + lead */}
-      <div className="mx-container pb-[80px] pt-0 text-center">
+    <section
+      id="inwestycje"
+      className="w-full bg-[var(--color-white)] scroll-mt-[82px]"
+    >
+      {/* Nagłówek + lead */}
+      <div className="mx-container pb-[80px] text-center">
         <div className="mx-auto flex max-w-[1280px] flex-col gap-[20px]">
-          <h2 className="h1 uppercase text-[var(--color-dark)]">NASZE INWESTYCJE</h2>
+          <h2 className="h1 uppercase text-[var(--color-dark)]">
+            NASZE INWESTYCJE
+          </h2>
           <p className="body-l font-sans mx-auto max-w-[750px] text-text-secondary">
-            Nasze inwestycje to miejsca, które łączą nowoczesny design, funkcjonalność i trwałość.
-            Każdy projekt realizowany przez RealEstate to wynik pasji, zaangażowania i dbałości o każdy szczegół.
+            Nasze inwestycje to miejsca, które łączą nowoczesny design,
+            funkcjonalność i trwałość. Każdy projekt realizowany przez RealEstate
+            to wynik pasji, zaangażowania i dbałości o każdy szczegół.
           </p>
         </div>
       </div>
 
-      {/* karta – spójny wrapper tylko mx-container */}
+      {/* Główna karta sekcji – wrapper slidera */}
       <div className="mx-container pb-[80px]">
         <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-[24px] overflow-hidden rounded-[14px] border border-[var(--color-stroke)] bg-[var(--color-white)] lg:min-h-[540px] lg:flex-row lg:items-stretch lg:gap-[32px]">
-          {/* lewa kolumna */}
+          {/* Lewa kolumna – opis inwestycji */}
           <div className="relative flex w-full flex-col rounded-[12px] bg-[var(--color-white)] p-[24px] lg:h-[540px] lg:w-[515px] lg:p-[36px]">
             <div className="flex flex-col gap-[10px]" aria-live="polite">
+              {/* Lokalizacja + ikona */}
               <div className="flex items-center gap-[10px]">
                 <span className="inline-flex h-[50px] w-[50px] items-center justify-center rounded-full border-[7px] border-[var(--color-stroke-subtle)] bg-[var(--color-surface-medium)]">
                   <img
@@ -140,15 +153,22 @@ export default function InvestmentSection() {
                     aria-hidden="true"
                   />
                 </span>
-                <span className="label-city text-[var(--color-dark)]">{current.city}</span>
+                <span className="label-city text-[var(--color-dark)]">
+                  {current.city}
+                </span>
               </div>
 
-              <h3 className="h2 uppercase text-[var(--color-dark)] mt-[10px]">{current.title}</h3>
+              {/* Tytuł inwestycji */}
+              <h3 className="h2 mt-[10px] uppercase text-[var(--color-dark)]">
+                {current.title}
+              </h3>
 
-              <p className="body-l font-sans max-w-[443px] text-text-secondary mt-[4px]">
+              {/* Opis */}
+              <p className="body-l font-sans mt-[4px] max-w-[443px] text-text-secondary">
                 {current.desc}
               </p>
 
+              {/* CTA */}
               <Button
                 as="link"
                 href="#"
@@ -159,14 +179,24 @@ export default function InvestmentSection() {
               </Button>
             </div>
 
-            {/* Strzałki */}
-            <div className="mt-[60px] flex items-center gap-[12px] lg:mt-0 lg:absolute lg:left-[36px] lg:bottom-[37px]">
-              <ArrowCircle direction="prev" onClick={goPrev} ariaLabel="Poprzedni slajd" disabled={isFirst} />
-              <ArrowCircle direction="next" onClick={goNext} ariaLabel="Następny slajd" disabled={isLast} />
+            {/* Nawigacja (‹ ›) – desktop: lewy dół */}
+            <div className="mt-[60px] flex items-center gap-[12px] lg:absolute lg:bottom-[37px] lg:left-[36px] lg:mt-0">
+              <ArrowCircle
+                direction="prev"
+                onClick={goPrev}
+                ariaLabel="Poprzedni slajd"
+                disabled={isFirst}
+              />
+              <ArrowCircle
+                direction="next"
+                onClick={goNext}
+                ariaLabel="Następny slajd"
+                disabled={isLast}
+              />
             </div>
           </div>
 
-          {/* obraz */}
+          {/* Prawa kolumna – obraz slajdu (fade transition) */}
           <div className="relative w-full overflow-hidden rounded-[8px] lg:h-[540px] lg:w-[738px]">
             {slides.map((slide, slideIndex) => (
               <Image

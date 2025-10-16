@@ -1,11 +1,16 @@
+// src/components/common/Header.tsx
 'use client';
 
 /* eslint-disable @next/next/no-img-element */
 
-import { useState } from 'react';
+import { useState, MouseEvent } from 'react';
 import Button from '@/components/ui/Button';
 import MobileMenu from './MobileMenu';
 
+/**
+ * Model pojedynczego linku w nawigacji.
+ * - hasDropdown + items ⇒ link rozwijany.
+ */
 type NavLink = {
   label: string;
   href: string;
@@ -13,6 +18,7 @@ type NavLink = {
   items?: { label: string; href: string }[];
 };
 
+/** Stała lista pozycji z Figmy (brak zmian logiki/treści). */
 const NAV_LINKS: NavLink[] = [
   { label: 'HOME', href: '#' },
   {
@@ -41,29 +47,36 @@ const NAV_LINKS: NavLink[] = [
   { label: 'WYNAJMIJ', href: '#' },
 ];
 
+/**
+ * Header:
+ * - desktop: menu centralne + CTA po prawej
+ * - mobile: hamburger otwiera panel (MobileMenu)
+ * - stany linków: default / hover / pressed (mouse down) / active (otwarty dropdown)
+ */
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [openKey, setOpenKey] = useState<string | null>(null); // active
-  const [pressedKey, setPressedKey] = useState<string | null>(null); // clicked
+  const [openKey, setOpenKey] = useState<string | null>(null);     // active
+  const [pressedKey, setPressedKey] = useState<string | null>(null); // clicked (moment wciśnięcia)
 
   const toggleMenu = () => setIsMenuOpen((open) => !open);
   const closeMenu = () => setIsMenuOpen(false);
 
-  const handleNavClick = (link: NavLink, e: React.MouseEvent) => {
+  /** Klik w link rozwijany – tylko przełącza dropdown, nie nawiguje. */
+  const handleNavClick = (link: NavLink, e: MouseEvent<HTMLAnchorElement>) => {
     if (!link.hasDropdown) return;
     e.preventDefault();
     setOpenKey((k) => (k === link.label ? null : link.label));
     setPressedKey(null);
   };
 
-  // 1:1 z Figmą – spina metryki typograficzne
+  // Baza metryk typograficznych linka (1:1 z Figmy)
   const linkBase =
     'nav-link inline-flex items-center py-[3px] whitespace-nowrap transition-colors duration-150';
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[var(--color-white)] border-b border-[var(--color-stroke-light)]">
+    <header className="sticky top-0 z-50 w-full border-b border-[var(--color-stroke-light)] bg-[var(--color-white)]">
       <div className="mx-container flex h-[82px] items-center justify-between">
-        {/* LEFT column — 296px */}
+        {/* LEFT: logo (kolumna ~296px) */}
         <div className="flex w-[296px] items-center py-[10px]">
           <a href="#" className="inline-flex items-center" aria-label="Crafton">
             <img
@@ -76,23 +89,28 @@ const Header = () => {
           </a>
         </div>
 
-        {/* CENTER nav */}
+        {/* CENTER: nawigacja desktop */}
         <nav
-          aria-label="Glowne"
-          className="hidden lg:flex flex-1 h-[24px] items-center justify-center text-[var(--color-dark)]"
+          aria-label="Główne"
+          className="hidden h-[24px] flex-1 items-center justify-center text-[var(--color-dark)] lg:flex"
         >
           <ul className="m-0 flex h-[24px] list-none items-center gap-[28px] p-0 [&>li>a::before]:content-none [&>li>a::after]:content-none">
             {NAV_LINKS.map((link) => {
               const isActive = openKey === link.label;
               const isPressed = pressedKey === link.label && !isActive;
 
-              // 4 stany kolorów
+              // 4 stany kolorów zgodnie z ustaleniami:
+              // default -> --color-dark
+              // hover   -> --color-text
+              // pressed -> --color-stroke-on-dark
+              // active  -> --color-primary
               const colorClass = isActive
                 ? 'text-[var(--color-primary)]'
                 : isPressed
                 ? 'text-[var(--color-stroke-on-dark)]'
                 : 'text-[var(--color-dark)] hover:text-[var(--color-text)]';
 
+              // Dodatkowy odstęp na strzałkę przy dropdownach
               const gapForItem = link.hasDropdown ? 'gap-[2px]' : 'gap-[6px]';
 
               return (
@@ -109,7 +127,7 @@ const Header = () => {
                   >
                     <span>{link.label}</span>
 
-                    {/* ▼ dokładnie taki jak w pliku — bez rotacji; kolor = currentColor */}
+                    {/* Strzałka 9×9 w kontenerze 18×18, kolor = currentColor (bez rotacji) */}
                     {link.hasDropdown ? (
                       <span
                         className="inline-flex translate-y-[1px] items-center justify-center"
@@ -129,7 +147,7 @@ const Header = () => {
                     ) : null}
                   </a>
 
-                  {/* dropdown */}
+                  {/* Dropdown (pozycjonowany pod linkiem; zamyka się po wyjechaniu myszą) */}
                   {link.hasDropdown && isActive && link.items?.length ? (
                     <div
                       role="menu"
@@ -155,9 +173,9 @@ const Header = () => {
           </ul>
         </nav>
 
-        {/* RIGHT column — CTA 296px */}
+        {/* RIGHT: CTA + hamburger (kolumna ~296px) */}
         <div className="flex w-[296px] items-center justify-end py-[10px]">
-          {/* tu była przyczyna 404: '/kontakt' → zmiana na '#kontakt' */}
+          {/* Link do sekcji kontakt (hash) */}
           <Button
             as="link"
             href="#kontakt"
@@ -167,9 +185,10 @@ const Header = () => {
             Kontakt
           </Button>
 
+          {/* Hamburger – widoczny tylko na mobile */}
           <button
             type="button"
-            aria-label={isMenuOpen ? 'Zamknij menu' : 'Otworz menu'}
+            aria-label={isMenuOpen ? 'Zamknij menu' : 'Otwórz menu'}
             aria-controls="mobile-menu"
             aria-expanded={isMenuOpen}
             onClick={toggleMenu}
@@ -200,6 +219,7 @@ const Header = () => {
         </div>
       </div>
 
+      {/* Panel mobilny */}
       <MobileMenu open={isMenuOpen} onClose={closeMenu} links={NAV_LINKS} />
     </header>
   );

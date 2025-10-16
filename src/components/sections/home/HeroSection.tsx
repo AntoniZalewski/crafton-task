@@ -1,5 +1,13 @@
+// src/components/sections/home/HeroSection.tsx
 import Button from '../../ui/Button';
 
+/**
+ * Sekcja hero:
+ * - kontener: .mx-container (max 1280px + responsywne paddingi X), .py-section (80px Y)
+ * - typografia H1: Clash (display), uppercase, -0.02em letter-spacing
+ * - odstępy: 24px pod H1, 20px nad blokiem przycisków
+ * - przyciski: primary „NASZE INWESTYCJE”, secondary „POZNAJMY SIĘ”
+ */
 const HeroSection = () => {
   return (
     <section className="w-full bg-[var(--color-white)]">
@@ -12,7 +20,7 @@ const HeroSection = () => {
           </h1>
 
           {/* 24px pod H1 */}
-          <div className="h-[24px]" aria-hidden />
+          <div className="h-[24px]" aria-hidden="true" />
 
           <p className="max-w-[648px] font-sans text-[18px] leading-[160%] tracking-[-0.02em] text-[var(--color-text)]">
             W RealEstate nieruchomości to coś więcej niż tylko budynki – to miejsca,
@@ -21,7 +29,7 @@ const HeroSection = () => {
           </p>
 
           {/* 20px nad przyciskami */}
-          <div className="h-[20px]" aria-hidden />
+          <div className="h-[20px]" aria-hidden="true" />
 
           {/* przyciski: gap 10, wyrównane do lewej */}
           <div className="flex items-center gap-[10px]">

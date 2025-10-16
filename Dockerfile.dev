@@ -1,0 +1,22 @@
+FROM node:20-alpine
+
+# Tylko to, co potrzebne do instalacji zależności z locka
+WORKDIR /app
+ENV NEXT_TELEMETRY_DISABLED=1
+
+# Wrzucamy tylko pliki lock/manifest – to pozwala cachować warstwę z node_modules
+COPY package.json package-lock.json* yarn.lock* pnpm-lock.yaml* ./
+
+# Zainstaluj zależności, usuń build-depsy, wyczyść cache
+RUN apk add --no-cache --virtual .build-deps libc6-compat python3 make g++ \
+  && corepack enable || true \
+  && if [ -f package-lock.json ]; then npm ci; \
+     elif [ -f yarn.lock ]; then yarn install --frozen-lockfile; \
+     elif [ -f pnpm-lock.yaml ]; then pnpm install --frozen-lockfile; \
+     else npm install; fi \
+  && npm cache clean --force \
+  && apk del .build-deps
+
+# Uwaga: NIE kopiujemy całego projektu – i tak dostanie się do kontenera przez bind mount
+EXPOSE 3000
+CMD ["npm","run","dev","--","-p","3000","-H","0.0.0.0"]

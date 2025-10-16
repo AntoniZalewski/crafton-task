@@ -1,49 +1,49 @@
+// src/components/ui/TextArea.tsx
 'use client';
 
-import type {
-  CSSProperties,
-  TextareaHTMLAttributes,
-} from 'react';
+import type { CSSProperties, TextareaHTMLAttributes } from 'react';
 
+/* -----------------------------------------------------------
+   Utilsy pomocnicze
+----------------------------------------------------------- */
 const clsx = (...classes: Array<string | false | null | undefined>) =>
   classes.filter(Boolean).join(' ');
 
 const toCssValue = (value?: string) => {
   if (!value) return undefined;
-  const trimmed = value.trim();
-  if (trimmed === '0') return '0';
-  if (/[a-z%)]$/i.test(trimmed) || trimmed.includes('calc(')) {
-    return trimmed;
-  }
-  if (/^\d+(\.\d+)?$/.test(trimmed)) {
-    return `${trimmed}px`;
-  }
-  return trimmed;
+  const t = value.trim();
+  if (t === '0') return '0';
+  if (/[a-z%)]$/i.test(t) || t.includes('calc(')) return t;
+  if (/^\d+(\.\d+)?$/.test(t)) return `${t}px`;
+  return t;
 };
 
 const normalizeBorder = (value?: string) => {
   if (!value) return undefined;
-  const segments = value.trim().split(/\s+/);
-  if (segments.length >= 2 && /^\d+(\.\d+)?$/.test(segments[0])) {
-    segments[0] = `${segments[0]}px`;
-    return segments.join(' ');
+  const seg = value.trim().split(/\s+/);
+  if (seg.length >= 2 && /^\d+(\.\d+)?$/.test(seg[0])) {
+    seg[0] = `${seg[0]}px`;
+    return seg.join(' ');
   }
   return value;
 };
 
+/* -----------------------------------------------------------
+   API i mapy styli
+----------------------------------------------------------- */
 type TextAreaVariant = 'default' | 'error' | 'success';
 type TextAreaSize = 'small' | 'medium' | 'large';
 
 const variantClasses: Record<TextAreaVariant, string> = {
   default:
-    'border-border-light focus:border-primary-background focus:ring-2 focus:ring-primary-background/30',
+    'border-[var(--color-stroke)] ' +
+    'focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/30',
   error:
-    'border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-200',
+    'border-[var(--color-error)] focus:border-[var(--color-error)] focus:ring-2 focus:ring-[var(--color-error)]/30',
   success:
     'border-emerald-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200',
 };
 
-// Typography audit: align textarea text to Instrument Sans body scale.
 const sizeClasses: Record<TextAreaSize, string> = {
   small: 'font-sans body-m px-3 py-2 min-h-[120px] rounded-md',
   medium: 'font-sans body-l px-4 py-3 min-h-[140px] rounded-lg',
@@ -54,6 +54,8 @@ export interface TextAreaProps
   extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   variant?: TextAreaVariant;
   size?: TextAreaSize;
+
+  // „wklejki” z Figmy
   text_font_size?: string;
   text_font_family?: string;
   text_font_weight?: string;
@@ -69,10 +71,14 @@ export interface TextAreaProps
   position?: CSSProperties['position'];
 }
 
+/* -----------------------------------------------------------
+   Komponent
+----------------------------------------------------------- */
 const TextArea = ({
   className,
   variant = 'default',
   size = 'medium',
+
   text_font_size,
   text_font_family,
   text_font_weight,
@@ -86,6 +92,7 @@ const TextArea = ({
   padding,
   margin,
   position,
+
   style,
   ...props
 }: TextAreaProps) => {
@@ -109,7 +116,9 @@ const TextArea = ({
   return (
     <textarea
       className={clsx(
-        'w-full border bg-secondary-white text-text-secondary transition-all duration-200 placeholder:text-text-secondary/60 focus:outline-none resize-vertical',
+        'w-full border bg-[var(--color-white)] transition-all duration-200',
+        'text-[var(--color-text)] placeholder:text-[var(--color-text)]/60',
+        'focus:outline-none focus:text-[var(--color-dark)] resize-vertical',
         variantClasses[variant],
         sizeClasses[size],
         className
@@ -121,5 +130,3 @@ const TextArea = ({
 };
 
 export default TextArea;
-// Typography audit: textarea content now follows Instrument Sans body scale across size variants.
-

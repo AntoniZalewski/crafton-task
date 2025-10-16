@@ -1,3 +1,4 @@
+// src/components/common/MobileMenu.tsx
 'use client';
 
 /* eslint-disable @next/next/no-img-element */
@@ -5,6 +6,7 @@
 import { useEffect, useRef } from 'react';
 import Button from '@/components/ui/Button';
 
+/** Model pozycji w menu mobilnym (zgodny z desktopowym nagłówkiem). */
 export type MobileMenuLink = {
   label: string;
   href: string;
@@ -17,22 +19,29 @@ interface MobileMenuProps {
   links: MobileMenuLink[];
 }
 
+/** Selektor elementów fokusowalnych wewnątrz panelu (focus trap). */
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
+/**
+ * Panel mobilny:
+ * - blokuje scroll ciała dokumentu po otwarciu
+ * - przenosi focus do przycisku zamknięcia i utrzymuje go w panelu (Tab/Shift+Tab)
+ * - zamyka się na ESC i na klik w tło
+ */
 const MobileMenu = ({ open, onClose, links }: MobileMenuProps) => {
   const panelRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (!open) {
-      return undefined;
-    }
+    if (!open) return;
 
     const previouslyFocused = document.activeElement as HTMLElement | null;
     const originalOverflow = document.body.style.overflow;
 
+    // 1) zablokuj przewijanie body podczas otwartego panelu
     document.body.style.overflow = 'hidden';
+    // 2) przenieś focus na przycisk zamknięcia
     closeButtonRef.current?.focus();
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -42,17 +51,11 @@ const MobileMenu = ({ open, onClose, links }: MobileMenuProps) => {
         return;
       }
 
-      if (event.key !== 'Tab' || !panelRef.current) {
-        return;
-      }
+      // Focus trap – tylko dla Tab i gdy mamy referencję do panelu
+      if (event.key !== 'Tab' || !panelRef.current) return;
 
-      const focusable = panelRef.current.querySelectorAll<HTMLElement>(
-        FOCUSABLE_SELECTOR
-      );
-
-      if (!focusable.length) {
-        return;
-      }
+      const focusable = panelRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
+      if (!focusable.length) return;
 
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
@@ -69,6 +72,7 @@ const MobileMenu = ({ open, onClose, links }: MobileMenuProps) => {
 
     document.addEventListener('keydown', handleKeyDown);
 
+    // Cleanup przy zamknięciu
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = originalOverflow;
@@ -76,17 +80,18 @@ const MobileMenu = ({ open, onClose, links }: MobileMenuProps) => {
     };
   }, [open, onClose]);
 
-  if (!open) {
-    return null;
-  }
+  if (!open) return null;
 
   return (
     <div className="lg:hidden">
+      {/* Tło półprzezroczyste – kliknięcie zamyka panel */}
       <div
         className="fixed inset-0 z-[55] bg-black/20"
         aria-hidden="true"
         onClick={onClose}
       />
+
+      {/* Sam panel po prawej stronie (dialog modalny) */}
       <div
         id="mobile-menu"
         ref={panelRef}
@@ -94,6 +99,7 @@ const MobileMenu = ({ open, onClose, links }: MobileMenuProps) => {
         aria-modal="true"
         className="fixed top-0 right-0 z-[60] flex h-screen w-[min(85vw,360px)] flex-col bg-[var(--color-white)] shadow-xl"
       >
+        {/* Pasek nagłówka panelu: logo + przycisk „X” */}
         <div className="px-page flex h-[82px] items-center justify-between">
           <a href="#" className="inline-flex items-center" aria-label="Crafton">
             <img
@@ -104,6 +110,7 @@ const MobileMenu = ({ open, onClose, links }: MobileMenuProps) => {
               className="h-[20px] w-[101px]"
             />
           </a>
+
           <button
             ref={closeButtonRef}
             type="button"
@@ -127,11 +134,12 @@ const MobileMenu = ({ open, onClose, links }: MobileMenuProps) => {
           </button>
         </div>
 
-        <nav aria-label="Glowne" className="flex-1 overflow-y-auto">
+        {/* Lista linków – prosta, czytelna typografia mobilna */}
+        <nav aria-label="Główne" className="flex-1 overflow-y-auto">
           <ul className="px-page divide-y divide-[var(--color-stroke-light)]">
             {links.map((link) => (
               <li key={link.label}>
-                {/* Typography audit: sync mobile nav item to body-Medium-L 16px/150% Instrument Sans. */}
+                {/* body-Medium-L 16/150%, uppercase, Instrument Sans */}
                 <a
                   href={link.href}
                   className="body-medium-l font-sans flex items-center justify-between py-3 uppercase tracking-[-0.02em] text-[var(--color-dark)] transition-opacity duration-150 hover:opacity-80"
@@ -154,10 +162,12 @@ const MobileMenu = ({ open, onClose, links }: MobileMenuProps) => {
                 </a>
               </li>
             ))}
+
+            {/* CTA na dole listy (spójny hash do sekcji #kontakt) */}
             <li>
               <Button
                 as="link"
-                href="/kontakt"
+                href="#kontakt"
                 variant="primary"
                 onClick={onClose}
                 className="mt-6 h-[46px] w-full justify-center gap-[10px] px-[20px] py-[13px]"

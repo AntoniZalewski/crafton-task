@@ -1,10 +1,15 @@
-﻿'use client';
+﻿// src/components/sections/home/ContactSection.tsx
+'use client';
 
 import { useState, type ChangeEvent, type FormEvent } from 'react';
 import Button from '../../ui/Button';
 import EditText from '../../ui/EditText';
 import TextArea from '../../ui/TextArea';
 
+/**
+ * Struktura danych formularza kontaktowego.
+ * Uwaga: to tylko stan UI – faktyczne wysłanie (API) jest TODO.
+ */
 interface FormData {
   email: string;
   fullName: string;
@@ -13,6 +18,7 @@ interface FormData {
   consent: boolean;
 }
 
+/** Stan początkowy – czyste pola. */
 const initialFormState: FormData = {
   email: '',
   fullName: '',
@@ -21,16 +27,23 @@ const initialFormState: FormData = {
   consent: false,
 };
 
+/** Prosta walidacja e-mail (na potrzeby UI; backend musi zweryfikować ponownie). */
 const isValidEmail = (value: string) =>
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 
 export default function ContactSection() {
   const [formData, setFormData] = useState<FormData>(initialFormState);
   const [emailTouched, setEmailTouched] = useState(false);
+  const [emailFocused, setEmailFocused] = useState(false);
 
+  // Błąd logiczny (dla a11y) – po dotknięciu i z treścią
   const emailInvalid =
     emailTouched && !isValidEmail(formData.email) && formData.email.length > 0;
 
+  // Błąd wizualny – jak wyżej, ALE tylko poza focusem
+  const emailInvalidVisual = !emailFocused && emailInvalid;
+
+  /** Uniwersalny handler – wspiera inputy i textarea, także checkbox. */
   const handleChange =
     (field: keyof FormData) =>
     (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -42,27 +55,43 @@ export default function ContactSection() {
       setFormData((prev) => ({ ...prev, [field]: value as any }));
     };
 
-  const handleEmailBlur = () => setEmailTouched(true);
+  const handleEmailFocus = () => setEmailFocused(true);
+  const handleEmailBlur = () => {
+    setEmailFocused(false);
+    setEmailTouched(true);
+  };
 
+  /** Submit bez realnego wysłania – zostawiamy TODO jak w oryginale. */
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setEmailTouched(true);
+    setEmailFocused(false);
     if (!isValidEmail(formData.email)) return;
     // TODO: submit
   };
 
+  /**
+   * Baza klas dla inputów:
+   * - spójne metryki i kolory z tokenów (globals.css)
+   * - stany: focus/disabled
+   */
   const baseInput =
     'h-[50px] rounded-input border bg-[var(--color-white)] px-[12px] ' +
-    'font-sans text-[16px] leading-[150%] tracking-[-0.02em] text-[var(--color-dark)] ' +
+    'font-sans text-[16px] leading-[150%] tracking-[-0.02em] text-[var(--color-text)] ' +
     'border-[var(--color-stroke)] placeholder:text-[var(--color-text)]/55 ' +
-    'focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/30 ' +
-    'disabled:bg-[var(--color-surface-subtle)] disabled:text-[var(--color-text)]/35 disabled:placeholder:text-[var(--color-text)]/30 disabled:border-[var(--color-stroke-light)] ' +
+    'focus:text-[var(--color-dark)] focus:border-[var(--color-primary)] ' +
+    'focus:ring-2 focus:ring-[var(--color-primary)]/30 ' +
+    'disabled:bg-[var(--color-surface-subtle)] disabled:text-[var(--color-text)]/35 ' +
+    'disabled:placeholder:text-[var(--color-text)]/30 disabled:border-[var(--color-stroke-light)] ' +
     'transition-colors';
 
+  // wariant dla e-maila (błąd wizualny tylko poza focusem)
   const emailClasses = [
     baseInput,
-    emailInvalid &&
-      'border-[#8E1C16] bg-[#FCEEEE] text-[#8E1C16] placeholder-[#8E1C16]/70 focus:border-[#8E1C16] focus:ring-[#8E1C16]/30',
+    emailInvalidVisual &&
+      'border-[var(--color-error)] bg-[var(--state-error-10)] ' +
+      'text-[var(--color-on-error-container)] placeholder:text-[var(--color-on-error-container)]/70 ' +
+      'focus:border-[var(--color-primary)] focus:ring-[var(--color-primary)]/30', // w trakcie fokusowania wracamy do stanu „focused”
   ]
     .filter(Boolean)
     .join(' ');
@@ -72,15 +101,18 @@ export default function ContactSection() {
       id="kontakt"
       className="w-full bg-[var(--color-surface-subtle)] py-[80px] scroll-mt-[82px]"
     >
-      {/* kotwica dla „POZNAJMY SIĘ” */}
+      {/* Dodatkowa kotwica dla linków typu #poznajmy – zatrzymanie pod headerem */}
       <span id="poznajmy" className="block h-0 scroll-mt-[82px]" aria-hidden="true" />
+
       <div className="mx-container w-full">
+        {/* Tytuł sekcji */}
         <div className="pb-[20px]">
           <h2 className="use-clash text-[42px] leading-[120%] text-[var(--color-dark)]">
             POROZMAWIAJMY
           </h2>
         </div>
 
+        {/* Formularz – wizualnie panel z lekkim cieniem */}
         <form
           onSubmit={handleSubmit}
           noValidate
@@ -92,6 +124,7 @@ export default function ContactSection() {
             </h3>
           </div>
 
+          {/* Wiersz pól: e-mail / imię i nazwisko / temat */}
           <div className="flex flex-wrap gap-[20px]">
             {/* E-MAIL */}
             <label className="flex w-full flex-col gap-[10px] lg:w-[319px]">
@@ -104,16 +137,17 @@ export default function ContactSection() {
                 placeholder="Twój adres e-mail"
                 value={formData.email}
                 onChange={handleChange('email')}
+                onFocus={handleEmailFocus}
                 onBlur={handleEmailBlur}
                 className={emailClasses}
                 aria-invalid={emailInvalid || undefined}
                 aria-describedby={emailInvalid ? 'email-error' : undefined}
                 required
               />
-              {emailInvalid && (
+              {emailInvalidVisual && (
                 <p
                   id="email-error"
-                  className="mt-[6px] text-[13px] leading-[18px] text-[#8E1C16]"
+                  className="mt-[6px] text-[13px] leading-[18px] text-[var(--color-on-error-container)]"
                 >
                   Podaj poprawny adres e-mail (np. imię@domena.pl).
                 </p>
@@ -166,7 +200,7 @@ export default function ContactSection() {
             />
           </label>
 
-          {/* ZGODA RODO — pełny tekst + odstęp między akapitami */}
+          {/* ZGODA RODO – checkbox jako kropka w kółku + długi tekst z odstępem */}
           <label className="body-xs font-sans flex items-start gap-[12px] text-left tracking-[-0.02em] text-text-secondary">
             <input
               name="consent"
@@ -188,23 +222,15 @@ export default function ContactSection() {
               />
             </span>
 
-            <span className="body-xs font-sans max-w-[90%] tracking-[-0.02em] text-text-secondary">
-              Wyrażam zgodę na przetwarzanie moich danych osobowych w postaci imienia, nazwiska,
-              adresu e-mail i nr tel. (jeżeli został podany), podanych w powyższym formularzu,
-              zgodnie z przepisami rozporządzenia Parlamentu Europejskiego i Rady (UE) 2016/679 z
-              dnia 27 kwietnia 2016 r. w sprawie ochrony osób fizycznych w związku z
-              przetwarzaniem danych osobowych i w sprawie swobodnego przepływu takich danych oraz
-              uchylenia dyrektywy 95/46/WE (ogólne rozporządzenie o ochronie danych), Dz. Urz. UE
-              z 4.5.2016 r. L 119, str. 1), w celu udzielenia odpowiedzi na złożone zapytanie.
-              Żądanie usunięcia danych proszę kierować na adres <b>biuro@realestate.com</b>.
-              {/* odstęp między akapitami */}
-              <span className="block h-[12px]" aria-hidden="true" />
-              Informujemy, że: 1. Administratorem Pani/Pana danych osobowych jest RealEstate sp. z
-              o.o. z siedzibą w Poznaniu przy ul. Długiej 5 lok. 25, 01-200 Poznań (KRS nr
-              0001000000) (dalej „Administrator”) e-mail: <b>biuro@realestate.com</b>
-            </span>
+            <span className="body-xs font-sans max-w-[90%] tracking-[-0.02em] text-text-secondary"> 
+              Wyrażam zgodę na przetwarzanie moich danych osobowych w postaci imienia, nazwiska, adresu e-mail i nr tel. (jeżeli został podany), podanych w powyższym formularzu, zgodnie z przepisami rozporządzenia Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia 2016 r. w sprawie ochrony osób fizycznych w związku z przetwarzaniem danych osobowych i w sprawie swobodnego przepływu takich danych oraz uchylenia dyrektywy 95/46/WE (ogólne rozporządzenie o ochronie danych), Dz. Urz. UE z 4.5.2016 r. L 119, str. 1), w celu udzielenia odpowiedzi na złożone zapytanie. Żądanie usunięcia danych proszę kierować na adres <b>biuro@realestate.com</b>. 
+              {/* odstęp między akapitami */} 
+              <span className="block h-[12px]" aria-hidden="true" /> 
+              Informujemy, że: 1. Administratorem Pani/Pana danych osobowych jest RealEstate sp. z o.o. z siedzibą w Poznaniu przy ul. Długiej 5 lok. 25, 01-200 Poznań (KRS nr 0001000000) (dalej „Administrator”) e-mail: <b>biuro@realestate.com</b> 
+              </span>
           </label>
 
+          {/* CTA wysłania – metryki zgodne z tokenami przycisków */}
           <Button
             type="submit"
             variant="primary"
