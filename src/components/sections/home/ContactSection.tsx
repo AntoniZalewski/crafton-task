@@ -1,4 +1,4 @@
-﻿// src/components/sections/home/ContactSection.tsx
+﻿﻿// src/components/sections/home/ContactSection.tsx
 'use client';
 
 import { useState, type ChangeEvent, type FormEvent } from 'react';
@@ -43,16 +43,17 @@ export default function ContactSection() {
   // Błąd wizualny – jak wyżej, ALE tylko poza focusem
   const emailInvalidVisual = !emailFocused && emailInvalid;
 
-  /** Uniwersalny handler – wspiera inputy i textarea, także checkbox. */
-  const handleChange =
-    (field: keyof FormData) =>
+  /** Handlery bez `any`: osobno tekst i checkbox */
+  const handleTextChange =
+    (field: 'email' | 'fullName' | 'subject' | 'message') =>
     (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const value =
-        event.target.type === 'checkbox'
-          ? (event.target as HTMLInputElement).checked
-          : event.target.value;
+      const value = event.target.value;
+      setFormData((prev) => ({ ...prev, [field]: value }));
+    };
 
-      setFormData((prev) => ({ ...prev, [field]: value as any }));
+  const handleCheckboxChange =
+    (field: 'consent') => (event: ChangeEvent<HTMLInputElement>) => {
+      setFormData((prev) => ({ ...prev, [field]: event.target.checked }));
     };
 
   const handleEmailFocus = () => setEmailFocused(true);
@@ -91,7 +92,7 @@ export default function ContactSection() {
     emailInvalidVisual &&
       'border-[var(--color-error)] bg-[var(--state-error-10)] ' +
       'text-[var(--color-on-error-container)] placeholder:text-[var(--color-on-error-container)]/70 ' +
-      'focus:border-[var(--color-primary)] focus:ring-[var(--color-primary)]/30', // w trakcie fokusowania wracamy do stanu „focused”
+      'focus:border-[var(--color-primary)] focus:ring-[var(--color-primary)]/30',
   ]
     .filter(Boolean)
     .join(' ');
@@ -136,7 +137,7 @@ export default function ContactSection() {
                 type="email"
                 placeholder="Twój adres e-mail"
                 value={formData.email}
-                onChange={handleChange('email')}
+                onChange={handleTextChange('email')}
                 onFocus={handleEmailFocus}
                 onBlur={handleEmailBlur}
                 className={emailClasses}
@@ -163,7 +164,7 @@ export default function ContactSection() {
                 name="fullName"
                 placeholder="Twoje imię i nazwisko"
                 value={formData.fullName}
-                onChange={handleChange('fullName')}
+                onChange={handleTextChange('fullName')}
                 className={baseInput}
               />
             </label>
@@ -177,7 +178,7 @@ export default function ContactSection() {
                 name="subject"
                 placeholder="O czym chcesz porozmawiać?"
                 value={formData.subject}
-                onChange={handleChange('subject')}
+                onChange={handleTextChange('subject')}
                 className={baseInput}
               />
             </label>
@@ -193,7 +194,7 @@ export default function ContactSection() {
               rows={6}
               placeholder="Napisz swoją wiadomość…"
               value={formData.message}
-              onChange={handleChange('message')}
+              onChange={handleTextChange('message')}
               className={baseInput
                 .replace('h-[50px]', 'h-[152px]')
                 .replace('px-[12px]', 'p-[12px]')}
@@ -206,7 +207,7 @@ export default function ContactSection() {
               name="consent"
               type="checkbox"
               checked={formData.consent}
-              onChange={handleChange('consent')}
+              onChange={handleCheckboxChange('consent')}
               className="peer sr-only"
             />
             <span

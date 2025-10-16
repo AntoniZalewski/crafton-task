@@ -1,10 +1,10 @@
-﻿/* eslint-disable @next/next/no-img-element */
+﻿﻿/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import Link from 'next/link';
 import React from 'react';
 
-type ButtonProps = React.ComponentPropsWithoutRef<'button'> & {
+type ButtonBaseProps = Omit<React.ComponentPropsWithoutRef<'button'>, 'onClick'> & {
   /** Renderuj jako <button>, <a> lub <Link>. */
   as?: 'button' | 'a' | 'link';
   /** Docelowy adres – wymagany, gdy as === 'a' | 'link'. */
@@ -14,7 +14,11 @@ type ButtonProps = React.ComponentPropsWithoutRef<'button'> & {
   className?: string;
   /** Ukryj ikonę w wariancie primary: showIcon={false} */
   showIcon?: boolean;
+  /** Wspólny typ kliknięcia dla <button> i <a>/<Link>. */
+  onClick?: (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
 };
+
+type ButtonProps = ButtonBaseProps;
 
 /**
  * Fundament typograficzny 1:1 z Figmy:
@@ -103,16 +107,16 @@ const Button = ({
     </span>
   );
 
-  // Lekka a11y: „wyłączone linki” – ignoruj klik i oznacz aria-disabled.
-  const handleMaybeDisabledClick: React.MouseEventHandler<
-    HTMLAnchorElement | HTMLButtonElement
-  > = (e) => {
+  // Jeden wspólny handler – bez `any`
+  const handleMaybeDisabledClick = (
+    e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>
+  ) => {
     if (disabled) {
       e.preventDefault();
       e.stopPropagation();
       return;
     }
-    onClick?.(e as any);
+    onClick?.(e);
   };
 
   if (as === 'link' && href) {
@@ -121,7 +125,7 @@ const Button = ({
         href={href}
         className={classes}
         aria-disabled={disabled || undefined}
-        onClick={handleMaybeDisabledClick as unknown as React.MouseEventHandler<HTMLAnchorElement>}
+        onClick={handleMaybeDisabledClick}
       >
         {Inner}
       </Link>
@@ -129,14 +133,13 @@ const Button = ({
   }
 
   if (as === 'a' && href) {
-    // zawężamy props do atrybutów <a>, żeby nie rozlewać buttonowych pól
     const aProps = props as React.ComponentPropsWithoutRef<'a'>;
     return (
       <a
         href={href}
         className={classes}
         aria-disabled={disabled || undefined}
-        onClick={handleMaybeDisabledClick as React.MouseEventHandler<HTMLAnchorElement>}
+        onClick={handleMaybeDisabledClick}
         {...aProps}
       >
         {Inner}
@@ -144,7 +147,7 @@ const Button = ({
     );
   }
 
-  // domyślnie <button> – zawężamy props do buttona
+  // domyślnie <button>
   const buttonProps = props as React.ComponentPropsWithoutRef<'button'>;
 
   return (
@@ -152,7 +155,7 @@ const Button = ({
       type="button"
       className={classes}
       disabled={disabled}
-      onClick={handleMaybeDisabledClick as React.MouseEventHandler<HTMLButtonElement>}
+      onClick={handleMaybeDisabledClick}
       {...buttonProps}
     >
       {Inner}
