@@ -144,13 +144,14 @@ export default function InvestmentSection() {
               {/* Lokalizacja + ikona */}
               <div className="flex items-center gap-[10px]">
                 <span className="inline-flex h-[50px] w-[50px] items-center justify-center rounded-full border-[7px] border-[var(--color-stroke-subtle)] bg-[var(--color-surface-medium)]">
-                  <img
+                  <Image
                     src="/icon-lokalizacja.svg"
                     alt=""
                     width={12}
                     height={19}
                     className="h-[19px] w-[12px] select-none"
                     aria-hidden="true"
+                    priority={false}
                   />
                 </span>
                 <span className="label-city text-[var(--color-dark)]">
@@ -197,7 +198,7 @@ export default function InvestmentSection() {
           </div>
 
           {/* Prawa kolumna – obraz slajdu (fade transition) */}
-          <div className="relative w-full overflow-hidden rounded-[8px] lg:h-[540px] lg:w-[738px]">
+          <div className="relative w-full overflow-hidden rounded-[8px] aspect-[16/9] lg:h-[540px] lg:w-[738px] lg:aspect-auto">
             {slides.map((slide, slideIndex) => (
               <Image
                 key={slide.title}
