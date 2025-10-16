@@ -124,10 +124,10 @@ export default function InvestmentSection() {
       {/* Nagłówek + lead */}
       <div className="mx-container pb-[80px] text-center">
         <div className="mx-auto flex max-w-[1280px] flex-col gap-[20px]">
-          <h2 className="h1 uppercase text-[var(--color-dark)]">
+          <h2 className="h1 text-balance uppercase text-[var(--color-dark)]">
             NASZE INWESTYCJE
           </h2>
-          <p className="body-l font-sans mx-auto max-w-[750px] text-text-secondary">
+          <p className="body-l text-balance font-sans mx-auto max-w-[750px] text-text-secondary">
             Nasze inwestycje to miejsca, które łączą nowoczesny design,
             funkcjonalność i trwałość. Każdy projekt realizowany przez RealEstate
             to wynik pasji, zaangażowania i dbałości o każdy szczegół.
@@ -160,12 +160,12 @@ export default function InvestmentSection() {
               </div>
 
               {/* Tytuł inwestycji */}
-              <h3 className="h2 mt-[10px] uppercase text-[var(--color-dark)]">
+              <h3 className="h2 text-balance mt-[10px] uppercase text-[var(--color-dark)]">
                 {current.title}
               </h3>
 
               {/* Opis */}
-              <p className="body-l font-sans mt-[4px] max-w-[443px] text-text-secondary">
+              <p className="body-l text-balance font-sans mt-[4px] max-w-[443px] text-text-secondary">
                 {current.desc}
               </p>
 

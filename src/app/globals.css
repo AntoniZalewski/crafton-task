@@ -271,4 +271,14 @@ h1, h2, h3, h4, h5, h6,
     padding-top: clamp(56px, 12vw, var(--section-pad-y));
     padding-bottom: clamp(56px, 12vw, var(--section-pad-y));
   }
+
+  .text-balance{
+    text-wrap: balance;
+  }
+
+  @supports not (text-wrap: balance){
+    .text-balance{
+      text-wrap: pretty;
+    }
+  }
 }

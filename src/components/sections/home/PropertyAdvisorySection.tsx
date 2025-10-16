@@ -35,7 +35,7 @@ export default function PropertyAdvisorySection() {
         {/* Nagłówek sekcji — Clash Display Medium 42/120, uppercase */}
         <h2
           id="advisory-heading"
-          className="h1 uppercase text-[var(--color-dark)]"
+          className="h1 text-balance uppercase text-[var(--color-dark)] text-center lg:text-left"
         >
           <span className="block">PORADNIK</span>
           <span className="block">PO NIERUCHOMOŚCIACH</span>
@@ -64,13 +64,13 @@ export default function PropertyAdvisorySection() {
               {/* Tytuł kafelka — Clash Display Medium 18/160, uppercase */}
               <h3
                 id={`article-${article.id}-title`}
-                className="h4 uppercase text-[var(--color-dark)]"
+                className="h4 text-balance uppercase text-[var(--color-dark)] text-center lg:text-left"
               >
                 {article.title}
               </h3>
 
               {/* Lead — Instrument Sans / body-l */}
-              <p className="body-l text-text-secondary">
+              <p className="body-l text-balance text-text-secondary text-center lg:text-left">
                 Dowiedz się, jakie kroki podjąć przed zakupem i jak ocenić
                 potencjał inwestycyjny nieruchomości, aby podejmować świadome decyzje.
               </p>

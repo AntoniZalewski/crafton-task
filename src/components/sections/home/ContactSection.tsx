@@ -105,10 +105,10 @@ export default function ContactSection() {
       {/* Dodatkowa kotwica dla linków typu #poznajmy – zatrzymanie pod headerem */}
       <span id="poznajmy" className="block h-0 scroll-mt-[82px]" aria-hidden="true" />
 
-      <div className="mx-container w-full">
+      <div className="mx-container flex w-full flex-col items-center">
         {/* Tytuł sekcji */}
-        <div className="pb-[20px]">
-          <h2 className="use-clash h1 text-[var(--color-dark)]">
+        <div className="pb-[20px] text-center">
+          <h2 className="use-clash h1 text-balance text-[var(--color-dark)]">
             POROZMAWIAJMY
           </h2>
         </div>
@@ -117,10 +117,10 @@ export default function ContactSection() {
         <form
           onSubmit={handleSubmit}
           noValidate
-          className="flex flex-col gap-[32px] rounded-panel border border-[var(--color-white)] bg-[#F6FBFF] px-[24px] py-[36px] shadow-[0_24px_48px_rgba(17,_39,_61,_0.08)] sm:gap-[42px] sm:px-[32px] sm:py-[46px]"
+          className="flex w-full max-w-[940px] flex-col gap-[32px] rounded-panel border border-[var(--color-white)] bg-[#F6FBFF] px-[24px] py-[36px] shadow-[0_24px_48px_rgba(17,_39,_61,_0.08)] sm:gap-[42px] sm:px-[32px] sm:py-[46px]"
         >
           <div>
-            <h3 className="use-clash h4 text-[var(--color-dark)]">
+            <h3 className="use-clash h4 text-balance text-[var(--color-dark)] text-center sm:text-left">
               Zostaw nam wiadomość
             </h3>
           </div>
