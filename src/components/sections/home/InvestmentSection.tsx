@@ -174,7 +174,7 @@ export default function InvestmentSection() {
                 as="link"
                 href="#"
                 variant="primary"
-                className="mt-[36px] h-[56px] w-[252px] justify-center px-[32px] py-[18px]"
+                className="mt-[36px] h-[56px] w-full justify-center px-[32px] py-[18px] sm:w-[252px]"
               >
                 POZNAJ SZCZEGÓŁY
               </Button>

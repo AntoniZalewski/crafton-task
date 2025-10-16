@@ -79,6 +79,13 @@ html, body{
   text-rendering: optimizeLegibility;
   font-synthesis-weight: none;
   font-synthesis-style: none;
+  overscroll-behavior-y: none;
+}
+
+@supports (height: 100dvh) {
+  html, body {
+    min-height: 100dvh;
+  }
 }
 
 @supports (height: 100dvh) {
