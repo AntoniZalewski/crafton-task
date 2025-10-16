@@ -47,7 +47,7 @@ export default function PropertyAdvisorySection() {
             <article
               key={article.id}
               aria-labelledby={`article-${article.id}-title`}
-              className="flex h-[505px] w-full max-w-[405px] flex-col gap-[20px] rounded-card border border-[var(--color-stroke)] bg-[var(--color-white)] p-[24px] shadow-[0_16px_28px_rgba(17,_39,_61,_0.06)]"
+              className="flex w-full max-w-[405px] flex-col gap-[20px] rounded-card border border-[var(--color-stroke)] bg-[var(--color-white)] p-[24px] shadow-[0_16px_28px_rgba(17,_39,_61,_0.06)] lg:h-[505px]"
             >
               {/* Obraz 357×222 (responsywnie przez aspect-ratio) */}
               <div className="relative aspect-[357/222] overflow-hidden rounded-[8px]">

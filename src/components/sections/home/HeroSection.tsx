@@ -22,22 +22,21 @@ const HeroSection = () => {
           {/* 24px pod H1 */}
           <div className="h-[24px]" aria-hidden="true" />
 
-          <p className="max-w-[648px] font-sans text-[18px] leading-[160%] tracking-[-0.02em] text-[var(--color-text)]">
-            W RealEstate nieruchomości to coś więcej niż tylko budynki – to miejsca,
-            <br />
-            w których powstają historie, rozwijają się biznesy i spełniają marzenia.
+          <p className="body-xl max-w-[648px] tracking-[-0.02em] text-[var(--color-text)]">
+            W RealEstate nieruchomości to coś więcej niż tylko budynki – to miejsca, w których powstają historie, rozwijają się
+            biznesy i spełniają marzenia.
           </p>
 
           {/* 20px nad przyciskami */}
           <div className="h-[20px]" aria-hidden="true" />
 
           {/* przyciski: gap 10, wyrównane do lewej */}
-          <div className="flex items-center gap-[10px]">
+          <div className="flex flex-col gap-[10px] sm:flex-row sm:flex-wrap sm:items-center">
             <Button
               as="link"
               href="#inwestycje"
               variant="primary"
-              className="w-full max-w-[252px] lg:w-auto"
+              className="w-full max-w-[252px] sm:w-auto sm:max-w-none lg:w-auto"
             >
               NASZE INWESTYCJE
             </Button>
@@ -47,7 +46,7 @@ const HeroSection = () => {
               as="link"
               href="#poznajmy"
               variant="secondary"
-              className="w-full max-w-[252px] lg:w-auto"
+              className="w-full max-w-[252px] sm:w-auto sm:max-w-none lg:w-auto"
             >
               POZNAJMY SIĘ
             </Button>
