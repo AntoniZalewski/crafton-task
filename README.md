@@ -1,15 +1,15 @@
-Crafton Task — Next.js (TS) + Tailwind + Docker
+# Crafton Task — Next.js (TypeScript) + Tailwind + Docker
 
 Implementacja frontendowa przygotowana na podstawie dostarczonego designu w ramach zadania rekrutacyjnego Crafton.
-Aplikacja została zbudowana w Next.js 14+ (TypeScript), stylowana za pomocą Tailwind CSS, i w pełni konteneryzowana przy użyciu Dockera.
+Aplikacja została zbudowana w Next.js 14+ (TypeScript), stylowana przy użyciu Tailwind CSS i w pełni konteneryzowana za pomocą Dockera.
 
-Podgląd
+## Podgląd
 
-🔗 Live demo: https://crafton-task.vercel.app/
+Live demo: https://crafton-task.vercel.app/
 
-📦 Repozytorium: github.com/AntoniZalewski/crafton-task
+Repozytorium: https://github.com/AntoniZalewski/crafton-task
 
-Technologie
+## Technologie
 
 Next.js 14+ (App Router)
 
@@ -23,50 +23,40 @@ ESLint
 
 Docker / Docker Compose
 
-Wymagania wstępne
+## Wymagania wstępne
 
-Opcja A — Docker (zalecane):
+Docker (zalecane): Docker 24+, Docker Compose v2
+Lokalnie: Node.js 18.17+ lub 20+, npm/yarn/pnpm
 
-Docker 24+
+## Szybki start
 
-Docker Compose v2
+### 1. Uruchomienie w Dockerze
 
-Opcja B — Lokalnie:
-
-Node.js 18.17+ lub 20+
-
-npm (lub yarn/pnpm)
-
-Szybki start
-1️⃣ Uruchomienie w Dockerze (z hot-reloadem)
-# Klonowanie repozytorium
 git clone https://github.com/AntoniZalewski/crafton-task.git
+
 cd crafton-task
 
-# Uruchomienie kontenera developerskiego
 docker compose -f docker-compose.dev.yml up --build
 
 
-Aplikacja będzie dostępna pod adresem:
-👉 http://localhost:3000
+Aplikacja: http://localhost:3000
 
-2️⃣ Uruchomienie lokalne (Node.js)
+### 2. Uruchomienie lokalne
+
 git clone https://github.com/AntoniZalewski/crafton-task.git
+
 cd crafton-task
 
 npm install
+
 npm run dev
 
+Aplikacja: http://localhost:3000
 
-Aplikacja wystartuje pod:
-👉 http://localhost:3000
+## Licencja
 
-Licencja
+Zobacz plik LICENSE.
 
-Projekt udostępniony na warunkach określonych w pliku LICENSE
-.
+# Autor:
 
-Autor
-
-Antoni Zalewski
-GitHub: AntoniZalewski
+# Antoni Zalewski — https://github.com/AntoniZalewski
