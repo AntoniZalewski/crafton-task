@@ -1,155 +1,72 @@
-# Crafton Frontend Task
+Crafton Task — Next.js (TS) + Tailwind + Docker
 
-A fully responsive **Next.js 15** application implemented as a recruitment task for **Crafton**.  
-The project reproduces the provided Figma design with pixel-perfect precision, using **TypeScript**, **Tailwind CSS**, and a modular component architecture organized under `src/components/`.
+Implementacja frontendowa przygotowana na podstawie dostarczonego designu w ramach zadania rekrutacyjnego Crafton.
+Aplikacja została zbudowana w Next.js 14+ (TypeScript), stylowana za pomocą Tailwind CSS, i w pełni konteneryzowana przy użyciu Dockera.
 
-**Live demo:** [https://crafton-task.vercel.app/](https://crafton-task.vercel.app/)
+Podgląd
 
----
+🔗 Live demo: https://crafton-task.vercel.app/
 
-## Table of Contents
-- [Project Overview](#project-overview)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Getting Started (Local)](#getting-started-local)
-- [Running with Docker](#running-with-docker)
-- [Deployment](#deployment)
-- [Available Scripts](#available-scripts)
-- [Conventions and Notes](#conventions-and-notes)
-- [Author](#author)
+📦 Repozytorium: github.com/AntoniZalewski/crafton-task
 
----
+Technologie
 
-## Project Overview
+Next.js 14+ (App Router)
 
-The goal of this project was to implement the **frontend layer** of a real-estate landing page using **Next.js App Router**, while maintaining strict design fidelity with the provided Figma source.
+React 18
 
-### Key Features
-- Fully responsive layout (desktop / tablet / mobile)
-- Shared design tokens (colors, spacing, typography)
-- Modular, section-based architecture
-- Typed forms and event handlers
-- Dockerized development environment for consistency
-- Deployed on Vercel with automatic redeploys from `main` branch
+TypeScript
 
----
+Tailwind CSS + PostCSS
 
-## Tech Stack
+ESLint
 
-| Layer | Technology |
-| ------ | ----------- |
-| Framework | [Next.js 15](https://nextjs.org/) with App Router |
-| Language | TypeScript |
-| Styling | Tailwind CSS + custom design tokens |
-| UI Components | Custom React components |
-| Containerization | Docker + docker-compose |
-| Deployment | Vercel |
+Docker / Docker Compose
 
----
+Wymagania wstępne
 
-## Project Structure
+Opcja A — Docker (zalecane):
 
-crafton-task/
-│
-├── src/
-│ ├── app/ # App Router structure
-│ │ ├── layout.tsx # Root layout
-│ │ ├── globals.css # Global styles and design tokens
-│ │ └── fonts.ts # Local font injection
-│ │
-│ ├── components/
-│ │ ├── common/ # Shared layout components (Header, Footer)
-│ │ ├── sections/home/ # Page sections (Hero, Investments, Contact)
-│ │ └── ui/ # Reusable UI elements (Button, EditText, etc.)
-│ │
-│ └── styles/ # Typography and overrides
-│
-├── public/ # Static assets (icons, images)
-├── .dockerignore
-├── Dockerfile.dev
-├── docker-compose.dev.yml
-├── next.config.ts
-├── tailwind.config.ts
-├── package.json
-└── README.md
+Docker 24+
 
-yaml
-Skopiuj kod
+Docker Compose v2
 
----
+Opcja B — Lokalnie:
 
-## Getting Started (Local)
+Node.js 18.17+ lub 20+
 
-### 1. Clone the repository
-```bash
+npm (lub yarn/pnpm)
+
+Szybki start
+1️⃣ Uruchomienie w Dockerze (z hot-reloadem)
+# Klonowanie repozytorium
 git clone https://github.com/AntoniZalewski/crafton-task.git
 cd crafton-task
-2. Install dependencies
-bash
-Skopiuj kod
-npm install
-# or
-yarn install
-# or
-pnpm install
-3. Start the development server
-bash
-Skopiuj kod
-npm run dev
-The application will be available at http://localhost:3000.
 
-Running with Docker
-The repository includes a complete Docker setup for development.
-
-Build and start
-bash
-Skopiuj kod
+# Uruchomienie kontenera developerskiego
 docker compose -f docker-compose.dev.yml up --build
-Then open http://localhost:3000.
 
-Stop the container
-bash
-Skopiuj kod
-docker compose -f docker-compose.dev.yml down
-This setup provides:
 
-Automatic hot-reload with bind mounts
+Aplikacja będzie dostępna pod adresem:
+👉 http://localhost:3000
 
-Node 20 (Alpine) base image
+2️⃣ Uruchomienie lokalne (Node.js)
+git clone https://github.com/AntoniZalewski/crafton-task.git
+cd crafton-task
 
-Reproducible environment across systems
+npm install
+npm run dev
 
-Deployment
-The production build is deployed on Vercel.
-Every push to the main branch triggers an automatic redeploy.
 
-Production URL:
-https://crafton-task.vercel.app/
+Aplikacja wystartuje pod:
+👉 http://localhost:3000
 
-Manual build (optional)
-bash
-Skopiuj kod
-npm run build
-npm run start
-Available Scripts
-Command	Description
-npm run dev	Start local development server
-npm run build	Create optimized production build
-npm run start	Run the built application locally
-npm run lint	Run ESLint checks
+Licencja
 
-Conventions and Notes
-Type safety: All components use strict TypeScript typing.
+Projekt udostępniony na warunkach określonych w pliku LICENSE
+.
 
-Code style: Enforced via ESLint and Prettier (Next.js defaults).
+Autor
 
-Line endings: Normalized through .gitattributes (LF).
-
-Docker: .dockerignore excludes build artifacts and environment files.
-
-Images: All visuals use next/image for optimization.
-
-Accessibility: Labels and focus states follow WCAG recommendations.
-
-Author
 Antoni Zalewski
+GitHub: AntoniZalewski
