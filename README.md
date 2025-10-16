@@ -1,36 +1,156 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Crafton Frontend Task
 
-## Getting Started
+A fully responsive **Next.js 15** application implemented as a recruitment task for **Crafton**.  
+The project reproduces the provided Figma design with pixel-perfect precision, uses **TypeScript**, **Tailwind CSS**, and a modular component architecture organized under `src/components/`.
 
-First, run the development server:
+> **Live demo:** [https://crafton-task.vercel.app/](https://crafton-task.vercel.app/)
 
+---
+
+## 🧭 Table of Contents
+- [Project Overview](#project-overview)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Getting Started (local)](#getting-started-local)
+- [Running with Docker](#running-with-docker)
+- [Deployment](#deployment)
+- [Scripts](#scripts)
+- [Conventions & Notes](#conventions--notes)
+
+---
+
+## Project Overview
+
+The goal of this project was to implement the **frontend layer** of a real-estate landing page using **Next.js App Router**, while maintaining strict design fidelity with the Figma source.  
+Key features include:
+
+- Responsive layout (desktop / tablet / mobile)
+- Shared design tokens (colors, spacing, typography) defined in `globals.css`
+- Modular section-based structure (`/sections/home/…`)
+- Reusable UI components (`/components/ui/`)
+- Typed forms and interaction logic with validation
+- Docker-based development environment for reproducibility
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+| ------ | ----------- |
+| Framework | [Next.js 15](https://nextjs.org/) with App Router |
+| Language | TypeScript |
+| Styling | Tailwind CSS + custom design tokens |
+| UI Components | Custom modular components |
+| Containerization | Docker + docker-compose (dev) |
+| Deployment | Vercel (Production) |
+
+---
+
+## Project Structure
+
+crafton-task/
+│
+├── src/
+│ ├── app/ # Next.js app router structure
+│ │ ├── layout.tsx # Root layout
+│ │ ├── globals.css # Global tokens and Tailwind imports
+│ │ └── fonts.ts # Local font injection (Clash Display, Instrument Sans)
+│ │
+│ ├── components/
+│ │ ├── common/ # Shared layout components (Header, Footer, etc.)
+│ │ ├── sections/home/ # Page sections (Hero, Investments, Contact, etc.)
+│ │ └── ui/ # Reusable UI primitives (Button, EditText, TextArea)
+│ │
+│ └── styles/ # Typography and local overrides
+│
+├── public/ # Static assets (icons, images)
+├── .dockerignore
+├── Dockerfile.dev
+├── docker-compose.dev.yml
+├── next.config.ts
+├── tailwind.config.ts
+├── package.json
+└── README.md
+
+yaml
+Skopiuj kod
+
+---
+
+## Getting Started (local)
+
+### 1. Clone the repository
 ```bash
+git clone https://github.com/AntoniZalewski/crafton-task.git
+cd crafton-task
+2. Install dependencies
+bash
+Skopiuj kod
+npm install
+# or
+yarn install
+# or
+pnpm install
+3. Start the development server
+bash
+Skopiuj kod
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Application will be available at:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+arduino
+Skopiuj kod
+http://localhost:3000
+Running with Docker
+The repository includes a ready-to-use Docker development setup.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Build and run
+bash
+Skopiuj kod
+docker compose -f docker-compose.dev.yml up --build
+Then open http://localhost:3000.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Stop the container
+bash
+Skopiuj kod
+docker compose -f docker-compose.dev.yml down
+This setup provides:
 
-## Learn More
+Automatic hot-reload (bind mount of your local files)
 
-To learn more about Next.js, take a look at the following resources:
+Node 20 Alpine base image
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Consistent environment across machines
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Deployment
+The production build is deployed on Vercel.
+Every push to the main branch triggers an automatic redeploy.
 
-## Deploy on Vercel
+Production URL:
+👉 https://crafton-task.vercel.app/
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Manual build (optional)
+bash
+Skopiuj kod
+npm run build
+npm run start
+Scripts
+Command	Description
+npm run dev	Start local development server
+npm run build	Create optimized production build
+npm run start	Run built application locally
+npm run lint	Run ESLint checks
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Conventions & Notes
+Type safety: all components are written in strict TypeScript mode.
+
+Code style: ESLint + Prettier (enforced by Next.js defaults).
+
+Line endings: normalized via .gitattributes (LF).
+
+Docker: .dockerignore excludes build artifacts and environment files.
+
+Images: all visual content uses next/image for optimization.
+
+Author
+Antoni Zalewski
+Frontend Developer / Creative Technologist
