@@ -211,11 +211,11 @@ export default function ContactSection() {
               className="peer sr-only"
             />
             <span
-              className="relative inline-flex h-5 w-5 items-center justify-center rounded-full border border-[var(--color-stroke)] bg-[var(--color-white)] transition-colors duration-200 peer-checked:border-[var(--color-primary)]"
+              className="relative inline-flex aspect-square h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[var(--color-stroke)] bg-[var(--color-white)] transition-colors duration-200 peer-checked:border-[var(--color-primary)]"
               aria-hidden="true"
             >
               <span
-                className={`block rounded-full transition-all duration-200 ${
+                className={`block aspect-square rounded-full transition-all duration-200 ${
                   formData.consent
                     ? 'h-[10px] w-[10px] bg-[var(--color-primary)]'
                     : 'h-[8px] w-[8px] border-2 border-[var(--color-stroke-light)]'
