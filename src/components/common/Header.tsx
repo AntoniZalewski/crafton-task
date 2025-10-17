@@ -75,9 +75,9 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-[var(--color-stroke-light)] bg-[var(--color-white)]">
-      <div className="mx-container flex h-[82px] items-center justify-between">
-        {/* LEFT: logo (kolumna ~296px) */}
-        <div className="flex w-[296px] items-center py-[10px]">
+      <div className="mx-container flex h-[82px] items-center lg:grid lg:grid-cols-[296px_minmax(0,1fr)_296px] lg:items-center">
+        {/* LEFT: logo (kolumna symetryczna względem CTA) */}
+        <div className="flex min-w-0 flex-1 items-center py-[10px] lg:flex-none lg:w-[296px] lg:justify-start lg:justify-self-start">
           <a href="#" className="inline-flex items-center" aria-label="Crafton">
             <img
               src="/crafton_logo.svg"
@@ -92,7 +92,7 @@ const Header = () => {
         {/* CENTER: nawigacja desktop */}
         <nav
           aria-label="Główne"
-          className="hidden h-[24px] flex-1 items-center justify-center text-[var(--color-dark)] lg:flex"
+          className="hidden h-[24px] min-w-0 flex-1 items-center justify-center text-[var(--color-dark)] lg:flex lg:justify-self-center"
         >
           <ul className="m-0 flex h-[24px] list-none items-center gap-[28px] p-0 [&>li>a::before]:content-none [&>li>a::after]:content-none">
             {NAV_LINKS.map((link) => {
@@ -173,17 +173,19 @@ const Header = () => {
           </ul>
         </nav>
 
-        {/* RIGHT: CTA + hamburger (kolumna ~296px) */}
-        <div className="flex w-[296px] items-center justify-end py-[10px]">
+        {/* RIGHT: CTA + hamburger (kolumna symetryczna względem logo) */}
+        <div className="flex min-w-0 flex-1 items-center justify-end py-[10px] lg:flex-none lg:w-[296px] lg:justify-self-end">
           {/* Link do sekcji kontakt (hash) */}
-          <Button
-            as="link"
-            href="#kontakt"
-            variant="primary"
-            className="hidden lg:inline-flex"
-          >
-            Kontakt
-          </Button>
+          <div className="hidden min-w-fit lg:flex">
+            <Button
+              as="link"
+              href="#kontakt"
+              variant="primary"
+              className="lg:inline-flex"
+            >
+              Kontakt
+            </Button>
+          </div>
 
           {/* Hamburger – widoczny tylko na mobile */}
           <button
