@@ -88,12 +88,6 @@ html, body{
   }
 }
 
-@supports (height: 100dvh) {
-  html, body {
-    min-height: 100dvh;
-  }
-}
-
 /* Nagłówki i kilka klas, które świadomie wymuszają „ciemny” kolor */
 h1, h2, h3, h4, h5, h6,
 .heading,

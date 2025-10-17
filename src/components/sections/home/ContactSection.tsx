@@ -117,7 +117,7 @@ export default function ContactSection() {
         <form
           onSubmit={handleSubmit}
           noValidate
-          className="flex w-full max-w-[940px] flex-col gap-[32px] rounded-panel border border-[var(--color-white)] bg-[#F6FBFF] px-[24px] py-[36px] text-left shadow-[0_24px_48px_rgba(17,_39,_61,_0.08)] sm:gap-[42px] sm:px-[32px] sm:py-[46px]"
+          className="flex w-full max-w-[1120px] flex-col gap-[32px] rounded-panel border border-[var(--color-white)] bg-[#F6FBFF] px-[24px] py-[36px] text-left shadow-[0_24px_48px_rgba(17,_39,_61,_0.08)] sm:gap-[42px] sm:px-[32px] sm:py-[46px] lg:px-[40px]"
         >
           <div>
             <h3 className="use-clash h4 text-balance text-[var(--color-dark)] text-center sm:text-left">
@@ -126,7 +126,7 @@ export default function ContactSection() {
           </div>
 
           {/* Wiersz pól: e-mail / imię i nazwisko / temat */}
-          <div className="flex flex-wrap gap-[20px]">
+          <div className="grid gap-[20px] lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.2fr)]">
             {/* E-MAIL */}
             <label className="flex w-full flex-col gap-[10px] text-left lg:w-[319px]">
               <span className="use-clash text-[14px] leading-[20px] tracking-[-0.02em] text-[var(--color-text)]">
@@ -210,15 +210,12 @@ export default function ContactSection() {
               onChange={handleCheckboxChange('consent')}
               className="peer sr-only"
             />
-            <span
-              className="relative inline-flex h-5 w-5 items-center justify-center rounded-full border border-[var(--color-stroke)] bg-[var(--color-white)] transition-colors duration-200 peer-checked:border-[var(--color-primary)]"
-              aria-hidden="true"
-            >
+            <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full border border-[var(--color-stroke)] bg-[var(--color-white)] transition-colors duration-200 peer-checked:border-[var(--color-primary)]" aria-hidden="true">
               <span
-                className={`block rounded-full transition-all duration-200 ${
+                className={`rounded-full transition-all duration-200 ${
                   formData.consent
                     ? 'h-[10px] w-[10px] bg-[var(--color-primary)]'
-                    : 'h-[8px] w-[8px] border-2 border-[var(--color-stroke-light)]'
+                    : 'h-[8px] w-[8px] border-2 border-[var(--color-stroke-light)] bg-transparent'
                 }`}
               />
             </span>
