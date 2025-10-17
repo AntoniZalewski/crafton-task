@@ -79,6 +79,13 @@ html, body{
   text-rendering: optimizeLegibility;
   font-synthesis-weight: none;
   font-synthesis-style: none;
+  overscroll-behavior-y: none;
+}
+
+@supports (height: 100dvh) {
+  html, body {
+    min-height: 100dvh;
+  }
 }
 
 /* Nagłówki i kilka klas, które świadomie wymuszają „ciemny” kolor */
@@ -262,7 +269,17 @@ h1, h2, h3, h4, h5, h6,
 
   /* Standardowa pionowa sekcja (desktop: 80px) */
   .py-section{
-    padding-top: var(--section-pad-y);
-    padding-bottom: var(--section-pad-y);
+    padding-top: clamp(56px, 12vw, var(--section-pad-y));
+    padding-bottom: clamp(56px, 12vw, var(--section-pad-y));
+  }
+
+  .text-balance{
+    text-wrap: balance;
+  }
+
+  @supports not (text-wrap: balance){
+    .text-balance{
+      text-wrap: pretty;
+    }
   }
 }

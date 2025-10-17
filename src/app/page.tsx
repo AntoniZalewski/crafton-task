@@ -7,7 +7,7 @@ import PropertyAdvisorySection from '@/components/sections/home/PropertyAdvisory
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col bg-secondary-light">
+    <main className="flex min-h-screen min-h-[100dvh] flex-col bg-secondary-light">
       <Header />
       <HeroSection />
       <InvestmentSection />

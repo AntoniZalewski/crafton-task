@@ -77,7 +77,7 @@ const Header = () => {
     <header className="sticky top-0 z-50 w-full border-b border-[var(--color-stroke-light)] bg-[var(--color-white)]">
       <div className="mx-container flex h-[82px] items-center justify-between">
         {/* LEFT: logo (kolumna ~296px) */}
-        <div className="flex w-[296px] items-center py-[10px]">
+        <div className="flex w-auto flex-shrink-0 items-center py-[10px] lg:w-[296px] lg:flex-none">
           <a href="#" className="inline-flex items-center" aria-label="Crafton">
             <img
               src="/crafton_logo.svg"
@@ -174,16 +174,18 @@ const Header = () => {
         </nav>
 
         {/* RIGHT: CTA + hamburger (kolumna ~296px) */}
-        <div className="flex w-[296px] items-center justify-end py-[10px]">
+        <div className="flex w-auto items-center justify-end py-[10px] lg:w-[296px] lg:flex-none">
           {/* Link do sekcji kontakt (hash) */}
-          <Button
-            as="link"
-            href="#kontakt"
-            variant="primary"
-            className="hidden lg:inline-flex"
-          >
-            Kontakt
-          </Button>
+          <div className="hidden lg:flex">
+            <Button
+              as="link"
+              href="#kontakt"
+              variant="primary"
+              className="lg:inline-flex"
+            >
+              Kontakt
+            </Button>
+          </div>
 
           {/* Hamburger – widoczny tylko na mobile */}
           <button
