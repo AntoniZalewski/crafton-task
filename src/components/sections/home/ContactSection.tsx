@@ -105,7 +105,7 @@ export default function ContactSection() {
       {/* Dodatkowa kotwica dla linków typu #poznajmy – zatrzymanie pod headerem */}
       <span id="poznajmy" className="block h-0 scroll-mt-[82px]" aria-hidden="true" />
 
-      <div className="mx-container flex w-full flex-col items-center text-center">
+      <div className="mx-container flex w-full flex-col items-center text-center lg:items-start lg:text-left">
         {/* Tytuł sekcji */}
         <div className="pb-[20px]">
           <h2 className="use-clash h1 text-balance text-[var(--color-dark)]">
@@ -128,7 +128,7 @@ export default function ContactSection() {
           {/* Wiersz pól: e-mail / imię i nazwisko / temat */}
           <div className="grid gap-[20px] lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.2fr)]">
             {/* E-MAIL */}
-            <label className="flex min-w-0 flex-col gap-[10px] text-left">
+            <label className="flex w-full flex-col gap-[10px] text-left lg:w-[319px]">
               <span className="use-clash text-[14px] leading-[20px] tracking-[-0.02em] text-[var(--color-text)]">
                 Adres e-mail
               </span>
@@ -156,7 +156,7 @@ export default function ContactSection() {
             </label>
 
             {/* IMIĘ I NAZWISKO */}
-            <label className="flex min-w-0 flex-col gap-[10px] text-left">
+            <label className="flex w-full flex-col gap-[10px] text-left lg:w-[330px]">
               <span className="use-clash text-[14px] leading-[20px] tracking-[-0.02em] text-[var(--color-text)]">
                 Imię i nazwisko
               </span>
@@ -170,7 +170,7 @@ export default function ContactSection() {
             </label>
 
             {/* TEMAT */}
-            <label className="flex min-w-0 flex-col gap-[10px] text-left">
+            <label className="flex w-full flex-col gap-[10px] text-left lg:w-[527px]">
               <span className="use-clash text-[14px] leading-[20px] tracking-[-0.02em] text-[var(--color-text)]">
                 Temat rozmowy
               </span>
