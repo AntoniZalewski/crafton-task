@@ -3,7 +3,7 @@
 
 /* eslint-disable @next/next/no-img-element */
 
-import { useState, MouseEvent } from 'react';
+import { useState, type MouseEvent, type CSSProperties } from 'react';
 import Button from '@/components/ui/Button';
 import MobileMenu from './MobileMenu';
 
@@ -73,11 +73,19 @@ const Header = () => {
   const linkBase =
     'nav-link inline-flex items-center py-[3px] whitespace-nowrap transition-colors duration-150';
 
+  const desktopColumnVars: CSSProperties = {
+    '--header-side-col': 'clamp(200px, 23.125vw, 296px)',
+    '--header-center-col': 'clamp(320px, 53.75vw, 688px)',
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-[var(--color-stroke-light)] bg-[var(--color-white)]">
-      <div className="mx-container flex h-[82px] items-center lg:grid lg:grid-cols-[296px_minmax(0,1fr)_296px] lg:items-center">
+      <div
+        className="mx-container flex h-[82px] items-center lg:grid lg:grid-cols-[var(--header-side-col)_minmax(0,_var(--header-center-col))_var(--header-side-col)] lg:items-center"
+        style={desktopColumnVars}
+      >
         {/* LEFT: logo (kolumna symetryczna względem CTA) */}
-        <div className="flex min-w-0 flex-1 items-center py-[10px] lg:flex-none lg:w-[296px] lg:justify-start lg:justify-self-start">
+        <div className="flex min-w-0 flex-1 items-center py-[10px] lg:flex-none lg:[width:var(--header-side-col)] lg:justify-start lg:justify-self-start">
           <a href="#" className="inline-flex items-center" aria-label="Crafton">
             <img
               src="/crafton_logo.svg"
@@ -92,7 +100,7 @@ const Header = () => {
         {/* CENTER: nawigacja desktop */}
         <nav
           aria-label="Główne"
-          className="hidden h-[24px] min-w-0 flex-1 items-center justify-center text-[var(--color-dark)] lg:flex lg:justify-self-center"
+          className="hidden h-[24px] min-w-0 flex-1 items-center justify-center text-[var(--color-dark)] lg:flex lg:w-full lg:[max-width:var(--header-center-col)] lg:justify-self-center"
         >
           <ul className="m-0 flex h-[24px] list-none items-center gap-[28px] p-0 [&>li>a::before]:content-none [&>li>a::after]:content-none">
             {NAV_LINKS.map((link) => {
@@ -174,7 +182,7 @@ const Header = () => {
         </nav>
 
         {/* RIGHT: CTA + hamburger (kolumna symetryczna względem logo) */}
-        <div className="flex min-w-0 flex-1 items-center justify-end py-[10px] lg:flex-none lg:w-[296px] lg:justify-self-end">
+        <div className="flex min-w-0 flex-1 items-center justify-end py-[10px] lg:flex-none lg:[width:var(--header-side-col)] lg:justify-self-end">
           {/* Link do sekcji kontakt (hash) */}
           <div className="hidden min-w-fit lg:flex">
             <Button
