@@ -73,7 +73,7 @@ const Header = () => {
   const linkBase =
     'nav-link inline-flex items-center py-[3px] whitespace-nowrap transition-colors duration-150';
 
-  const desktopColumnVars: CSSProperties = {
+  const desktopColumnVars: CSSProperties & { [key: `--${string}`]: string } = {
     '--header-side-col': 'clamp(200px, 23.125vw, 296px)',
     '--header-center-col': 'clamp(320px, 53.75vw, 688px)',
   };
