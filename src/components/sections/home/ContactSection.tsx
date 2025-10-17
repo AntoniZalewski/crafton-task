@@ -117,7 +117,7 @@ export default function ContactSection() {
         <form
           onSubmit={handleSubmit}
           noValidate
-          className="flex w-full max-w-[940px] flex-col gap-[32px] rounded-panel border border-[var(--color-white)] bg-[#F6FBFF] px-[24px] py-[36px] text-left shadow-[0_24px_48px_rgba(17,_39,_61,_0.08)] sm:gap-[42px] sm:px-[32px] sm:py-[46px]"
+          className="flex w-full max-w-[1120px] flex-col gap-[32px] rounded-panel border border-[var(--color-white)] bg-[#F6FBFF] px-[24px] py-[36px] text-left shadow-[0_24px_48px_rgba(17,_39,_61,_0.08)] sm:gap-[42px] sm:px-[32px] sm:py-[46px] lg:px-[40px]"
         >
           <div>
             <h3 className="use-clash h4 text-balance text-[var(--color-dark)] text-center sm:text-left">
@@ -126,9 +126,9 @@ export default function ContactSection() {
           </div>
 
           {/* Wiersz pól: e-mail / imię i nazwisko / temat */}
-          <div className="flex flex-wrap gap-[20px]">
+          <div className="grid gap-[20px] lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.2fr)]">
             {/* E-MAIL */}
-            <label className="flex w-full flex-col gap-[10px] text-left lg:w-[319px]">
+            <label className="flex min-w-0 flex-col gap-[10px] text-left">
               <span className="use-clash text-[14px] leading-[20px] tracking-[-0.02em] text-[var(--color-text)]">
                 Adres e-mail
               </span>
@@ -156,7 +156,7 @@ export default function ContactSection() {
             </label>
 
             {/* IMIĘ I NAZWISKO */}
-            <label className="flex w-full flex-col gap-[10px] text-left lg:w-[330px]">
+            <label className="flex min-w-0 flex-col gap-[10px] text-left">
               <span className="use-clash text-[14px] leading-[20px] tracking-[-0.02em] text-[var(--color-text)]">
                 Imię i nazwisko
               </span>
@@ -170,7 +170,7 @@ export default function ContactSection() {
             </label>
 
             {/* TEMAT */}
-            <label className="flex w-full flex-col gap-[10px] text-left lg:w-[527px]">
+            <label className="flex min-w-0 flex-col gap-[10px] text-left">
               <span className="use-clash text-[14px] leading-[20px] tracking-[-0.02em] text-[var(--color-text)]">
                 Temat rozmowy
               </span>
